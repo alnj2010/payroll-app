@@ -11,14 +11,14 @@ export abstract class AddEmployeeUsecase implements Transaction {
     protected name: string,
     protected address: string,
   ) {}
-  execute() {
+  async execute() {
     const newEmployee = new Employee(this.id, this.name, this.address);
 
     newEmployee.setPaymentClassification(this.getPaymentClassification());
     newEmployee.setPaymentMethod(new HoldMethod());
     newEmployee.setPaymentScheduler(this.getPaymentScheduler());
 
-    PayrollRepository.addEmployee(newEmployee);
+    await PayrollRepository.addEmployee(newEmployee);
   }
 
   abstract getPaymentClassification(): PaymentClassification;

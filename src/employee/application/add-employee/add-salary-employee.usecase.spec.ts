@@ -13,7 +13,11 @@ import {
 
 describe('AddSalaryEmployee usecase ', () => {
   describe('execute method', () => {
-    it('WHEN execute method is called THEN a salary employee should be added', () => {
+    afterEach(() => {
+      PayrollRepository.deleteEmployee(employeeIdDummy);
+    });
+
+    it('WHEN execute method is called THEN a salary employee should be added', async () => {
       const addSalaryEmployeeUsecase = new AddSalaryEmployeeUsecase(
         employeeIdDummy,
         employeeNameDummy,
@@ -23,7 +27,9 @@ describe('AddSalaryEmployee usecase ', () => {
 
       addSalaryEmployeeUsecase.execute();
 
-      const employee: Employee = PayrollRepository.getEmployee(employeeIdDummy);
+      const employee: Employee = await PayrollRepository.getEmployee(
+        employeeIdDummy,
+      );
 
       expect(employee.getId()).toBe(employeeIdDummy);
       expect(employee.getName()).toBe(employeeNameDummy);

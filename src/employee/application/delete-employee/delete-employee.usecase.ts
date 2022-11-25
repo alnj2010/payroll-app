@@ -3,7 +3,7 @@ import { PayrollRepository } from '../../infraestructure/repositories/payroll.re
 
 export class DeleteEmployeeUsecase implements Transaction {
   constructor(protected id: string) {}
-  execute() {
-    PayrollRepository.deleteEmployee(this.id);
+  async execute() {
+    await PayrollRepository.deleteEmployee(this.id);
   }
 }

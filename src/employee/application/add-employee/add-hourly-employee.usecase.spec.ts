@@ -13,7 +13,11 @@ import { AddHourlyEmployeeUsecase } from './add-hourly-employee.usecase';
 
 describe('AddHourlyEmployee usecase ', () => {
   describe('execute method', () => {
-    it('WHEN execute method is called THEN a hourly employee should be added', () => {
+    afterEach(() => {
+      PayrollRepository.deleteEmployee(employeeIdDummy);
+    });
+
+    it('WHEN execute method is called THEN a hourly employee should be added', async () => {
       const addHourlyEmployeeUsecase = new AddHourlyEmployeeUsecase(
         employeeIdDummy,
         employeeNameDummy,
@@ -23,7 +27,9 @@ describe('AddHourlyEmployee usecase ', () => {
 
       addHourlyEmployeeUsecase.execute();
 
-      const employee: Employee = PayrollRepository.getEmployee(employeeIdDummy);
+      const employee: Employee = await PayrollRepository.getEmployee(
+        employeeIdDummy,
+      );
 
       expect(employee.getId()).toBe(employeeIdDummy);
       expect(employee.getName()).toBe(employeeNameDummy);
