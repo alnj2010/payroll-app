@@ -3,12 +3,12 @@ import {
   employeeIdDummy,
   employeeNameDummy,
   employeeHourlyRateDummy,
-} from '../../../../test/dummies';
-import { Employee } from '../../domain/employee';
-import { HourlyClassification } from '../../domain/payment-classification/hourly-classification';
-import { HoldMethod } from '../../domain/payment-method/hold-method';
-import { WeeklyScheduler } from '../../domain/payment-scheduler/weekly-schedule';
-import { PayrollRepository } from '../../infraestructure/repositories/payroll.repository';
+} from '../../../../../../test/dummies';
+import { Employee } from '../../../../domain/employee';
+import { HourlyClassification } from '../../../../domain/payment-classification/hourly-classification';
+import { HoldMethod } from '../../../../domain/payment-method/hold-method';
+import { WeeklyScheduler } from '../../../../domain/payment-scheduler/weekly-schedule';
+import { PayrollRepository } from '../../../../infraestructure/repositories/payroll.repository';
 import { AddHourlyEmployeeUsecase } from './add-hourly-employee.usecase';
 
 describe('AddHourlyEmployee usecase ', () => {

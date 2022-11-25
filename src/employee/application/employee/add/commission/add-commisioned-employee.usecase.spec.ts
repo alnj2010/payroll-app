@@ -1,16 +1,16 @@
-import { Employee } from '../../domain/employee';
-import { HoldMethod } from '../../domain/payment-method/hold-method';
-import { PayrollRepository } from '../../infraestructure/repositories/payroll.repository';
+import { Employee } from '../../../../domain/employee';
+import { HoldMethod } from '../../../../domain/payment-method/hold-method';
+import { PayrollRepository } from '../../../../infraestructure/repositories/payroll.repository';
 import {
   employeeAddressDummy,
   employeeCommissionRateDummy,
   employeeIdDummy,
   employeeNameDummy,
   employeeSalaryDummy,
-} from '../../../../test/dummies';
-import { BiweeklyScheduler } from '../../domain/payment-scheduler/biweekly-scheduler';
+} from '../../../../../../test/dummies';
+import { BiweeklyScheduler } from '../../../../domain/payment-scheduler/biweekly-scheduler';
 import { AddCommissionedEmployeeUsecase } from './add-commissioned-employee.usecase';
-import { CommissionClassification } from '../../domain/payment-classification/commission-classification';
+import { CommissionClassification } from '../../../../domain/payment-classification/commission-classification';
 
 describe('AddCommissionedEmployee usecase ', () => {
   describe('execute method', () => {

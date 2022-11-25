@@ -1,6 +1,6 @@
-import { SalaryClassification } from '../../domain/payment-classification/salary-classification';
-import { MonthlyScheduler } from '../../domain/payment-scheduler/monthly-scheduler';
-import { AddEmployeeUsecase } from './add-employee-usecase';
+import { SalaryClassification } from '../../../../domain/payment-classification/salary-classification';
+import { MonthlyScheduler } from '../../../../domain/payment-scheduler/monthly-scheduler';
+import { AddEmployeeUsecase } from '../add-employee-usecase';
 
 export class AddSalaryEmployeeUsecase extends AddEmployeeUsecase {
   constructor(

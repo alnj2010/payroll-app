@@ -1,12 +1,12 @@
-import { Employee } from '../../domain/employee';
-import { PayrollRepository } from '../../infraestructure/repositories/payroll.repository';
+import { Employee } from '../../../domain/employee';
+import { PayrollRepository } from '../../../infraestructure/repositories/payroll.repository';
 import {
   employeeAddressDummy,
   employeeIdDummy,
   employeeNameDummy,
   employeeSalaryDummy,
-} from '../../../../test/dummies';
-import { AddSalaryEmployeeUsecase } from '../add-employee/add-salary-employee.usecase';
+} from '../../../../../test/dummies';
+import { AddSalaryEmployeeUsecase } from '../add/salary/add-salary-employee.usecase';
 import { DeleteEmployeeUsecase } from './delete-employee.usecase';
 
 describe('deleteEmployee usecase ', () => {

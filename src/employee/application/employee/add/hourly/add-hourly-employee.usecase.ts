@@ -1,6 +1,6 @@
-import { HourlyClassification } from '../../domain/payment-classification/hourly-classification';
-import { WeeklyScheduler } from '../../domain/payment-scheduler/weekly-schedule';
-import { AddEmployeeUsecase } from './add-employee-usecase';
+import { HourlyClassification } from '../../../../domain/payment-classification/hourly-classification';
+import { WeeklyScheduler } from '../../../../domain/payment-scheduler/weekly-schedule';
+import { AddEmployeeUsecase } from '../add-employee-usecase';
 
 export class AddHourlyEmployeeUsecase extends AddEmployeeUsecase {
   constructor(

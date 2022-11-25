@@ -1,55 +1,58 @@
 import {
   employeeAddressDummy,
+  employeeCommissionRateDummy,
   employeeHourlyRateDummy,
   employeeIdDummy,
   employeeNameDummy,
+  employeeSalaryDummy,
   errorDummy,
-  timeCardDateDummy,
-  timeCardHoursDummy,
+  saleReceiptAmountDummy,
+  saleReceiptDateDummy,
 } from '../../../../test/dummies';
-import { AddHourlyEmployeeUsecase } from '../employee/add/hourly/add-hourly-employee.usecase';
-import { AddTimeCardUsecase } from './add-time-card.usecase';
 import { PayrollRepository } from '../../infraestructure/repositories/payroll.repository';
-import { HourlyClassification } from '../../domain/payment-classification/hourly-classification';
 import { AddSalaryEmployeeUsecase } from '../employee/add/salary/add-salary-employee.usecase';
 import {
   EMPLOYEE_DO_NOT_EXIST,
   EMPLOYEE_IS_NOT_HOURLY_CLASSIFICATION,
 } from '../../domain/errors/custom-messages';
+import { CommissionClassification } from '../../domain/payment-classification/commission-classification';
+import { AddSaleReceiptUsecase } from './add-sale-receipt';
+import { AddCommissionedEmployeeUsecase } from '../employee/add/commission/add-commissioned-employee.usecase';
 
-describe('addTimeCard usecase ', () => {
+describe('addSaleReceipt usecase ', () => {
   describe('execute method', () => {
     afterEach(() => {
       PayrollRepository.deleteEmployee(employeeIdDummy);
     });
 
-    it('WHEN execute method is called THEN a time card should be added', async () => {
-      await new AddHourlyEmployeeUsecase(
+    it('WHEN execute method is called THEN a sale receipt should be added', async () => {
+      await new AddCommissionedEmployeeUsecase(
         employeeIdDummy,
         employeeNameDummy,
         employeeAddressDummy,
-        employeeHourlyRateDummy,
+        employeeSalaryDummy,
+        employeeCommissionRateDummy,
       ).execute();
 
-      const addTimeCard = new AddTimeCardUsecase(
+      const addSaleReceipt = new AddSaleReceiptUsecase(
         employeeIdDummy,
-        timeCardDateDummy,
-        timeCardHoursDummy,
+        saleReceiptDateDummy,
+        saleReceiptAmountDummy,
       );
 
-      await addTimeCard.execute();
+      await addSaleReceipt.execute();
 
-      const employeeHourlyClassification: HourlyClassification = (
+      const employeeCommissionClassification: CommissionClassification = (
         await PayrollRepository.getEmployee(employeeIdDummy)
-      ).getPaymentClassification() as HourlyClassification;
+      ).getPaymentClassification() as CommissionClassification;
 
-      expect(employeeHourlyClassification.getTimeCards().length).toBe(1);
-      expect(employeeHourlyClassification.getTimeCards()[0].getDate()).toEqual(
-        timeCardDateDummy,
-      );
-      expect(employeeHourlyClassification.getTimeCards()[0].getHours()).toEqual(
-        timeCardHoursDummy,
-      );
+      expect(employeeCommissionClassification.getSalesReceipt().length).toBe(1);
+      expect(
+        employeeCommissionClassification.getSalesReceipt()[0].getDate(),
+      ).toEqual(saleReceiptDateDummy);
+      expect(
+        employeeCommissionClassification.getSalesReceipt()[0].getAmount(),
+      ).toEqual(saleReceiptAmountDummy);
     });
 
     it('WHEN execute method is called but employee id is not hourly classification THEN throw a exeption', async () => {
@@ -60,30 +63,30 @@ describe('addTimeCard usecase ', () => {
         employeeHourlyRateDummy,
       ).execute();
 
-      const addTimeCard = new AddTimeCardUsecase(
+      const addSaleReceipt = new AddSaleReceiptUsecase(
         employeeIdDummy,
-        timeCardDateDummy,
-        timeCardHoursDummy,
+        saleReceiptDateDummy,
+        saleReceiptAmountDummy,
       );
 
       expect.assertions(1);
       try {
-        await addTimeCard.execute();
+        await addSaleReceipt.execute();
       } catch (error) {
         expect(error.message).toBe(EMPLOYEE_IS_NOT_HOURLY_CLASSIFICATION);
       }
     });
 
     it('WHEN execute method is called but employee id do not exist THEN throw a exeption', async () => {
-      const addTimeCard = new AddTimeCardUsecase(
+      const addSaleReceipt = new AddSaleReceiptUsecase(
         employeeIdDummy,
-        timeCardDateDummy,
-        timeCardHoursDummy,
+        saleReceiptDateDummy,
+        saleReceiptAmountDummy,
       );
 
       expect.assertions(1);
       try {
-        await addTimeCard.execute();
+        await addSaleReceipt.execute();
       } catch (error) {
         expect(error.message).toBe(EMPLOYEE_DO_NOT_EXIST);
       }
@@ -94,15 +97,15 @@ describe('addTimeCard usecase ', () => {
         .spyOn(PayrollRepository, 'getEmployee')
         .mockRejectedValue(errorDummy);
 
-      const addTimeCard = new AddTimeCardUsecase(
+      const addSaleReceipt = new AddSaleReceiptUsecase(
         employeeIdDummy,
-        timeCardDateDummy,
-        timeCardHoursDummy,
+        saleReceiptDateDummy,
+        saleReceiptAmountDummy,
       );
 
       expect.assertions(1);
       try {
-        await addTimeCard.execute();
+        await addSaleReceipt.execute();
       } catch (error) {
         expect(error).toEqual(errorDummy);
       }

@@ -1,6 +1,6 @@
-import { CommissionClassification } from '../../domain/payment-classification/commission-classification';
-import { BiweeklyScheduler } from '../../domain/payment-scheduler/biweekly-scheduler';
-import { AddEmployeeUsecase } from './add-employee-usecase';
+import { CommissionClassification } from '../../../../domain/payment-classification/commission-classification';
+import { BiweeklyScheduler } from '../../../../domain/payment-scheduler/biweekly-scheduler';
+import { AddEmployeeUsecase } from '../add-employee-usecase';
 
 export class AddCommissionedEmployeeUsecase extends AddEmployeeUsecase {
   constructor(

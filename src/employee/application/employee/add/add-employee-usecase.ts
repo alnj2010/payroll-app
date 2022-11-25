@@ -1,9 +1,9 @@
 import { Transaction } from 'src/employee/domain/transacction';
-import { Employee } from '../../domain/employee';
-import { PaymentClassification } from '../../domain/payment-classification';
-import { HoldMethod } from '../../domain/payment-method/hold-method';
-import { PaymentScheduler } from '../../domain/payment-scheduler';
-import { PayrollRepository } from '../../infraestructure/repositories/payroll.repository';
+import { Employee } from '../../../domain/employee';
+import { PaymentClassification } from '../../../domain/payment-classification';
+import { HoldMethod } from '../../../domain/payment-method/hold-method';
+import { PaymentScheduler } from '../../../domain/payment-scheduler';
+import { PayrollRepository } from '../../../infraestructure/repositories/payroll.repository';
 
 export abstract class AddEmployeeUsecase implements Transaction {
   constructor(

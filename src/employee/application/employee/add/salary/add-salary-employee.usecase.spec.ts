@@ -1,15 +1,15 @@
-import { Employee } from '../../domain/employee';
-import { SalaryClassification } from '../../domain/payment-classification/salary-classification';
-import { HoldMethod } from '../../domain/payment-method/hold-method';
-import { MonthlyScheduler } from '../../domain/payment-scheduler/monthly-scheduler';
-import { PayrollRepository } from '../../infraestructure/repositories/payroll.repository';
+import { Employee } from '../../../../domain/employee';
+import { SalaryClassification } from '../../../../domain/payment-classification/salary-classification';
+import { HoldMethod } from '../../../../domain/payment-method/hold-method';
+import { MonthlyScheduler } from '../../../../domain/payment-scheduler/monthly-scheduler';
+import { PayrollRepository } from '../../../../infraestructure/repositories/payroll.repository';
 import { AddSalaryEmployeeUsecase } from './add-salary-employee.usecase';
 import {
   employeeAddressDummy,
   employeeIdDummy,
   employeeNameDummy,
   employeeSalaryDummy,
-} from '../../../../test/dummies';
+} from '../../../../../../test/dummies';
 
 describe('AddSalaryEmployee usecase ', () => {
   describe('execute method', () => {

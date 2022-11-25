@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { AddSalaryEmployeeUsecase } from '../../application/add-employee/add-salary-employee.usecase';
+import { AddSalaryEmployeeUsecase } from '../../application/employee/add/salary/add-salary-employee.usecase';
 
 @Controller()
 export class EmployeeController {

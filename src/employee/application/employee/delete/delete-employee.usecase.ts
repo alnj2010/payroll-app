@@ -1,5 +1,5 @@
-import { Transaction } from 'src/employee/domain/transacction';
-import { PayrollRepository } from '../../infraestructure/repositories/payroll.repository';
+import { Transaction } from '../../../domain/transacction';
+import { PayrollRepository } from '../../../infraestructure/repositories/payroll.repository';
 
 export class DeleteEmployeeUsecase implements Transaction {
   constructor(protected id: string) {}
