@@ -1,3 +1,1 @@
-export class PaymentMethod {
-  constructor() {}
-}
+export class PaymentMethod {}

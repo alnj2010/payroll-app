@@ -1,6 +1,5 @@
 import {
   employeeAddressDummy,
-  employeeHourlyRateDummy,
   employeeIdDummy,
   employeeNameDummy,
   employeeSalaryDummy,
@@ -10,8 +9,6 @@ import {
 import { PayrollRepository } from '../../../../../infraestructure/repositories/payroll.repository';
 import { EMPLOYEE_DO_NOT_EXIST } from '../../../../../domain/errors/custom-messages';
 import { ChangeEmployeeAffiliationToUnionUsecase } from './change-employee-affiliation-to-union.usecase';
-import { SalaryClassification } from '../../../../../domain/payment-classification/salary-classification';
-import { AddHourlyEmployeeUsecase } from '../../../add/hourly/add-hourly-employee.usecase';
 import { AddSalaryEmployeeUsecase } from '../../../add/salary/add-salary-employee.usecase';
 import { Employee } from '../../../../../domain/employee';
 import { UnionAffiliation } from '../../../../../domain/affiliations/union-affiliation';

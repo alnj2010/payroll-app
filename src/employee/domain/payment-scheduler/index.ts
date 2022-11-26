@@ -1,3 +1,1 @@
-export class PaymentScheduler {
-  constructor() {}
-}
+export class PaymentScheduler {}
