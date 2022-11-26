@@ -16,13 +16,13 @@ import {
   EMPLOYEE_IS_NOT_HOURLY_CLASSIFICATION,
 } from '../../domain/errors/custom-messages';
 import { CommissionClassification } from '../../domain/payment-classification/commission-classification';
-import { AddSaleReceiptUsecase } from './add-sale-receipt';
+import { AddSaleReceiptUsecase } from './add-sale-receipt.usecase';
 import { AddCommissionedEmployeeUsecase } from '../employee/add/commission/add-commissioned-employee.usecase';
 
 describe('addSaleReceipt usecase ', () => {
   describe('execute method', () => {
-    afterEach(() => {
-      PayrollRepository.deleteEmployee(employeeIdDummy);
+    afterEach(async () => {
+      await PayrollRepository.clear();
     });
 
     it('WHEN execute method is called THEN a sale receipt should be added', async () => {

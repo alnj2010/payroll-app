@@ -11,8 +11,8 @@ import { DeleteEmployeeUsecase } from './delete-employee.usecase';
 
 describe('deleteEmployee usecase ', () => {
   describe('execute method', () => {
-    afterEach(() => {
-      PayrollRepository.deleteEmployee(employeeIdDummy);
+    afterEach(async () => {
+      await PayrollRepository.clear();
     });
 
     it('WHEN execute method is called THEN a commissioned employee should be deleted', async () => {
@@ -23,7 +23,7 @@ describe('deleteEmployee usecase ', () => {
         employeeSalaryDummy,
       );
 
-      addUsecase.execute();
+      await addUsecase.execute();
 
       let employee: Employee = await PayrollRepository.getEmployee(
         employeeIdDummy,
@@ -32,7 +32,7 @@ describe('deleteEmployee usecase ', () => {
       expect(employee).not.toBeNull();
 
       const removeUsecase = new DeleteEmployeeUsecase(employee.getId());
-      removeUsecase.execute();
+      await removeUsecase.execute();
 
       employee = await PayrollRepository.getEmployee(employeeIdDummy);
 

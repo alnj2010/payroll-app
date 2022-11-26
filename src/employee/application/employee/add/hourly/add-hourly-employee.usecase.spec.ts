@@ -1,3 +1,4 @@
+import { NoAffiliation } from '../../../../domain/affiliations/no-affiliation';
 import {
   employeeAddressDummy,
   employeeIdDummy,
@@ -13,8 +14,8 @@ import { AddHourlyEmployeeUsecase } from './add-hourly-employee.usecase';
 
 describe('AddHourlyEmployee usecase ', () => {
   describe('execute method', () => {
-    afterEach(() => {
-      PayrollRepository.deleteEmployee(employeeIdDummy);
+    afterEach(async () => {
+      await PayrollRepository.clear();
     });
 
     it('WHEN execute method is called THEN a hourly employee should be added', async () => {
@@ -25,7 +26,7 @@ describe('AddHourlyEmployee usecase ', () => {
         employeeHourlyRateDummy,
       );
 
-      addHourlyEmployeeUsecase.execute();
+      await addHourlyEmployeeUsecase.execute();
 
       const employee: Employee = await PayrollRepository.getEmployee(
         employeeIdDummy,
@@ -40,6 +41,7 @@ describe('AddHourlyEmployee usecase ', () => {
       );
       expect(employee.getPaymentMethod()).toBeInstanceOf(HoldMethod);
       expect(employee.getPaymentScheduler()).toBeInstanceOf(WeeklyScheduler);
+      expect(employee.getAffiliation()).toBeInstanceOf(NoAffiliation);
     });
   });
 });

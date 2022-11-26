@@ -31,6 +31,5 @@ export class AddSaleReceiptUsecase implements Transaction {
     classification.addSaleReceipt(newSaleReceipt);
 
     employee.setPaymentClassification(classification);
-    await PayrollRepository.addEmployee(employee);
   }
 }

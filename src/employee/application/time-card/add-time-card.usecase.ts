@@ -31,6 +31,5 @@ export class AddTimeCardUsecase implements Transaction {
     classification.addTimeCard(newTimeCard);
 
     employee.setPaymentClassification(classification);
-    await PayrollRepository.addEmployee(employee);
   }
 }

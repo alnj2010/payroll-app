@@ -10,11 +10,12 @@ import {
   employeeNameDummy,
   employeeSalaryDummy,
 } from '../../../../../../test/dummies';
+import { NoAffiliation } from '../../../../domain/affiliations/no-affiliation';
 
 describe('AddSalaryEmployee usecase ', () => {
   describe('execute method', () => {
-    afterEach(() => {
-      PayrollRepository.deleteEmployee(employeeIdDummy);
+    afterEach(async () => {
+      await PayrollRepository.clear();
     });
 
     it('WHEN execute method is called THEN a salary employee should be added', async () => {
@@ -25,7 +26,7 @@ describe('AddSalaryEmployee usecase ', () => {
         employeeSalaryDummy,
       );
 
-      addSalaryEmployeeUsecase.execute();
+      await addSalaryEmployeeUsecase.execute();
 
       const employee: Employee = await PayrollRepository.getEmployee(
         employeeIdDummy,
@@ -40,6 +41,7 @@ describe('AddSalaryEmployee usecase ', () => {
       );
       expect(employee.getPaymentMethod()).toBeInstanceOf(HoldMethod);
       expect(employee.getPaymentScheduler()).toBeInstanceOf(MonthlyScheduler);
+      expect(employee.getAffiliation()).toBeInstanceOf(NoAffiliation);
     });
   });
 });

@@ -11,11 +11,12 @@ import {
 import { BiweeklyScheduler } from '../../../../domain/payment-scheduler/biweekly-scheduler';
 import { AddCommissionedEmployeeUsecase } from './add-commissioned-employee.usecase';
 import { CommissionClassification } from '../../../../domain/payment-classification/commission-classification';
+import { NoAffiliation } from '../../../../domain/affiliations/no-affiliation';
 
 describe('AddCommissionedEmployee usecase ', () => {
   describe('execute method', () => {
-    afterEach(() => {
-      PayrollRepository.deleteEmployee(employeeIdDummy);
+    afterEach(async () => {
+      await PayrollRepository.clear();
     });
 
     it('WHEN execute method is called THEN a commissioned employee should be added', async () => {
@@ -27,7 +28,7 @@ describe('AddCommissionedEmployee usecase ', () => {
         employeeCommissionRateDummy,
       );
 
-      addCommissionedEmployeeUsecase.execute();
+      await addCommissionedEmployeeUsecase.execute();
 
       const employee: Employee = await PayrollRepository.getEmployee(
         employeeIdDummy,
@@ -42,6 +43,7 @@ describe('AddCommissionedEmployee usecase ', () => {
       );
       expect(employee.getPaymentMethod()).toBeInstanceOf(HoldMethod);
       expect(employee.getPaymentScheduler()).toBeInstanceOf(BiweeklyScheduler);
+      expect(employee.getAffiliation()).toBeInstanceOf(NoAffiliation);
     });
   });
 });
