@@ -4,7 +4,7 @@ import { EMPLOYEE_DO_NOT_EXIST } from '../../../domain/errors/custom-messages';
 import { Employee } from '../../../domain/employee';
 
 export abstract class ChangeEmployeeUsecase implements Transaction {
-  constructor(private employeeId: string) {}
+  constructor(protected employeeId: string) {}
 
   async execute() {
     const employee: Employee = await PayrollRepository.getEmployee(

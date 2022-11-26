@@ -28,7 +28,7 @@ export class PayrollRepository {
   }
 
   static async deleteAffiliation(id: string): Promise<boolean> {
-    return this.employees.delete(id);
+    return this.unionMembers.delete(id);
   }
   static async clear() {
     this.employees.clear();

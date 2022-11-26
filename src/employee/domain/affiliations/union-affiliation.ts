@@ -4,7 +4,7 @@ import { Affiliation } from './affiliation';
 export class UnionAffiliation implements Affiliation {
   private serviceCharges: ServiceCharge[] = [];
 
-  constructor(private dueRate: number) {}
+  constructor(private memberId: string, private dueRate: number) {}
 
   getFee(): number {
     return 0;
@@ -12,6 +12,10 @@ export class UnionAffiliation implements Affiliation {
 
   getDueRate(): number {
     return this.dueRate;
+  }
+
+  getMemberId(): string {
+    return this.memberId;
   }
 
   getServiceCharges(): ServiceCharge[] {

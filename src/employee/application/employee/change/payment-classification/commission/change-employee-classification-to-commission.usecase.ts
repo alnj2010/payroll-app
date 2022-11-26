@@ -1,6 +1,7 @@
 import { Employee } from '../../../../../domain/employee';
 import { ChangeEmployeeUsecase } from '../../change-employee.usecase';
 import { CommissionClassification } from '../../../../../domain/payment-classification/commission-classification';
+import { BiweeklyScheduler } from '../../../../../domain/payment-scheduler/biweekly-scheduler';
 
 export class ChangeEmployeeClassificationToCommissionUsecase extends ChangeEmployeeUsecase {
   constructor(
@@ -15,5 +16,6 @@ export class ChangeEmployeeClassificationToCommissionUsecase extends ChangeEmplo
     employee.setPaymentClassification(
       new CommissionClassification(this.salary, this.commissionRate),
     );
+    employee.setPaymentScheduler(new BiweeklyScheduler());
   }
 }

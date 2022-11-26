@@ -12,9 +12,9 @@ import {
 
 import { PayrollRepository } from '../../../infraestructure/repositories/payroll.repository';
 import { AddSalaryEmployeeUsecase } from '../../employee/add/salary/add-salary-employee.usecase';
-import { SubscribeUnionMemberUsecase } from '../union/subscribe-union-member.usecase';
 import { AddServiceChargeUsecase } from './add-service-charge.usecase';
 import { Employee } from '../../../domain/employee';
+import { ChangeEmployeeAffiliationToUnionUsecase } from '../../employee/change/affiliation/union/change-employee-affiliation-to-union.usecase';
 
 describe('addTimeCard usecase ', () => {
   afterEach(async () => {
@@ -29,7 +29,7 @@ describe('addTimeCard usecase ', () => {
       employeeSalaryDummy,
     ).execute();
 
-    await new SubscribeUnionMemberUsecase(
+    await new ChangeEmployeeAffiliationToUnionUsecase(
       employeeIdDummy,
       memberIdDummy,
       memberDueRateDummy,

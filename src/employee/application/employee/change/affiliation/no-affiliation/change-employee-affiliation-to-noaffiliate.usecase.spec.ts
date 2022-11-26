@@ -1,16 +1,18 @@
 import {
   employeeAddressDummy,
-  employeeHourlyRateDummy,
   employeeIdDummy,
   employeeNameDummy,
   employeeSalaryDummy,
+  memberDueRateDummy,
+  memberIdDummy,
 } from '../../../../../../../test/dummies';
 import { PayrollRepository } from '../../../../../infraestructure/repositories/payroll.repository';
 import { EMPLOYEE_DO_NOT_EXIST } from '../../../../../domain/errors/custom-messages';
-import { ChangeEmployeeClassificationToHourlyUsecase } from './change-employee-classification-to-hourly.usecase';
-import { HourlyClassification } from '../../../../../domain/payment-classification/hourly-classification';
+import { ChangeEmployeeAffiliationToUnionUsecase } from '../union/change-employee-affiliation-to-union.usecase';
+
 import { AddSalaryEmployeeUsecase } from '../../../add/salary/add-salary-employee.usecase';
-import { WeeklyScheduler } from '../../../../../domain/payment-scheduler/weekly-schedule';
+import { NoAffiliation } from '../../../../../domain/affiliations/no-affiliation';
+import { ChangeEmployeeAffiliationToNoaffiliateUsecase } from './change-employee-affiliation-to-noaffiliate.usecase';
 
 describe('ChangeNameEmployee usecase ', () => {
   describe('execute method', () => {
@@ -18,7 +20,7 @@ describe('ChangeNameEmployee usecase ', () => {
       await PayrollRepository.clear();
     });
 
-    it('WHEN execute method is called THEN employee classification should be changed to hourly', async () => {
+    it('WHEN execute method is called THEN will be disaffiliate a employee', async () => {
       await new AddSalaryEmployeeUsecase(
         employeeIdDummy,
         employeeNameDummy,
@@ -26,25 +28,30 @@ describe('ChangeNameEmployee usecase ', () => {
         employeeSalaryDummy,
       ).execute();
 
-      await new ChangeEmployeeClassificationToHourlyUsecase(
+      await new ChangeEmployeeAffiliationToUnionUsecase(
         employeeIdDummy,
-        employeeHourlyRateDummy,
+        memberIdDummy,
+        memberDueRateDummy,
+      ).execute();
+
+      await new ChangeEmployeeAffiliationToNoaffiliateUsecase(
+        employeeIdDummy,
       ).execute();
 
       const employee = await PayrollRepository.getEmployee(employeeIdDummy);
-
-      expect(employee.getPaymentClassification()).toBeInstanceOf(
-        HourlyClassification,
+      const member = await PayrollRepository.getEmployeeByUnionAffiliation(
+        memberIdDummy,
       );
-      expect(employee.getPaymentScheduler()).toBeInstanceOf(WeeklyScheduler);
+
+      expect(member).toBeNull();
+      expect(employee.getAffiliation()).toBeInstanceOf(NoAffiliation);
     });
 
     it('WHEN execute method is called but employee id do not exist THEN throw a exeption', async () => {
       expect.assertions(1);
       try {
-        await new ChangeEmployeeClassificationToHourlyUsecase(
+        await new ChangeEmployeeAffiliationToNoaffiliateUsecase(
           employeeIdDummy,
-          employeeHourlyRateDummy,
         ).execute();
       } catch (error) {
         expect(error.message).toBe(EMPLOYEE_DO_NOT_EXIST);
