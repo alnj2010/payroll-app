@@ -31,12 +31,20 @@ export class Employee {
     return this.name;
   }
 
+  setName(newName: string) {
+    this.name = newName;
+  }
+
   getId(): string {
     return this.id;
   }
 
   getAddress(): string {
     return this.address;
+  }
+
+  setAddress(newAddress: string) {
+    this.address = newAddress;
   }
 
   getPaymentClassification(): PaymentClassification {
@@ -55,7 +63,7 @@ export class Employee {
     return this.affiliation;
   }
 
-  setAffiliation(affiliation) {
+  setAffiliation(affiliation: Affiliation) {
     this.affiliation = affiliation;
   }
 }
