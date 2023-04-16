@@ -9,4 +9,8 @@ export class EmployeeRepository {
   static read(id: string): Employee {
     return DB.employees.get(id);
   }
+
+  static delete(id: string) {
+    return DB.employees.delete(id);
+  }
 }
