@@ -1,25 +1,25 @@
 import { HoldMethod } from '../domain/hold-method';
-import { MonthlyScheduler } from '../domain/monthly-scheduler';
-import { SalaryClassification } from '../domain/salary-classification';
 import { AddEmployeeTransaction } from './add-employee';
+import { CommissionClassification } from '../domain/commission-classification';
+import { BiweeklyScheduler } from '../domain/biweekly-scheduler';
 
-export class AddSalaryEmployeeTransaction extends AddEmployeeTransaction {
+export class AddCommissionEmployeeTransaction extends AddEmployeeTransaction {
   constructor(
     id: string,
     name: string,
     address: string,
-
     private salary: number,
+    private commissionRate: number,
   ) {
     super(id, name, address);
   }
 
   protected createPaymentClassification() {
-    return new SalaryClassification(this.salary);
+    return new CommissionClassification(this.salary, this.commissionRate);
   }
 
   protected createPaymentScheduler() {
-    return new MonthlyScheduler();
+    return new BiweeklyScheduler();
   }
 
   protected createPaymentMethod() {
