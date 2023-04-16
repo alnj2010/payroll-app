@@ -7,10 +7,19 @@ export class EmployeeRepository {
   }
 
   static read(id: string): Employee {
-    return DB.employees.get(id);
+    const employee = DB.employees.get(id);
+    if (employee) {
+      return employee;
+    } else {
+      throw new Error('Employee not found');
+    }
   }
 
   static delete(id: string) {
     return DB.employees.delete(id);
+  }
+
+  static clear() {
+    return DB.employees.clear();
   }
 }

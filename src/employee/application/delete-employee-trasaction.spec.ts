@@ -17,6 +17,10 @@ describe('deleteEmployeeTransaction class', () => {
     }).compile();
   });
 
+  afterEach(async () => {
+    EmployeeRepository.clear();
+  });
+
   describe('deleteSalaryEmployeeTransaction execute method', () => {
     it('When execute method is called a employee is deleted', () => {
       const addEmployeeTransaction = new AddSalaryEmployeeTransaction(
@@ -34,7 +38,12 @@ describe('deleteEmployeeTransaction class', () => {
 
       deleteEmployeeTransaction.execute();
 
-      expect(EmployeeRepository.read(employeeId)).toBeFalsy();
+      expect.assertions(2);
+      try {
+        EmployeeRepository.read(employeeId);
+      } catch (error) {
+        expect(error.message).toBe('Employee not found');
+      }
     });
   });
 });

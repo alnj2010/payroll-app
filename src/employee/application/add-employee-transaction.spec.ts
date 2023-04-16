@@ -148,6 +148,10 @@ describe('AddEmployeeTransaction class', () => {
     }).compile();
   });
 
+  afterEach(async () => {
+    EmployeeRepository.clear();
+  });
+
   describe('AddSalaryEmployeeTransaction execute method', () => {
     it('When execute method is called a salaryEmployee is created', () => {
       const salaryEmployeeAdderTester = new SalaryEmployeeAdderTester();
