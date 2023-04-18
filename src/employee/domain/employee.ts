@@ -21,8 +21,15 @@ export class Employee {
   public getName(): string {
     return this.name;
   }
+
+  public setName(name: string): void {
+    this.name = name;
+  }
   public getAddress(): string {
     return this.address;
+  }
+  public setAddress(address: string): void {
+    this.address = address;
   }
 
   public getPaymentClassification(): PaymentClassification {

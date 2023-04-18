@@ -1,6 +1,8 @@
 export const employeeId = 'employeeIdDummy';
 export const employeeName = 'employeeNameDummy';
+export const employeeName2 = 'employeeNameDummy2';
 export const employeeAddress = 'employeeNameAddress';
+export const employeeAddress2 = 'employeeNameAddress2';
 export const employeeSalary = 10;
 export const employeehourlyRate = 20;
 export const employeeCommissionRate = 0.5;
