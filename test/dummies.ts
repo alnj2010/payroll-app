@@ -9,3 +9,8 @@ export const timecardHours = 3;
 
 export const saleReceiptDate = '1681613383';
 export const saleReceiptAmount = 6;
+
+export const memberId = 'memberIdDummy';
+export const memberDuesRate = 1;
+export const serviceChargeId = '1681613383';
+export const serviceChargeAmount = 8;

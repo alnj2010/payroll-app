@@ -1,3 +1,4 @@
+import { Affiliation } from './affiliation';
 import { PaymentClassification } from './payment-classification';
 import { PaymentMethod } from './payment-method';
 import { PaymentScheduler } from './payment-scheduler';
@@ -6,6 +7,7 @@ export class Employee {
   private paymentClassification: PaymentClassification;
   private paymentScheduler: PaymentScheduler;
   private paymentMethod: PaymentMethod;
+  private affiliation: Affiliation;
 
   constructor(
     private id: string,
@@ -47,5 +49,12 @@ export class Employee {
 
   public setPaymentMethod(paymentMethod: PaymentMethod): void {
     this.paymentMethod = paymentMethod;
+  }
+  public setAffiliation(affiliation: Affiliation) {
+    this.affiliation = affiliation;
+  }
+
+  public getAffiliation(): Affiliation {
+    return this.affiliation;
   }
 }
