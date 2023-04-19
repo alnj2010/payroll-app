@@ -1,4 +1,5 @@
 import { Employee } from '../domain/employee';
+import { NoAffiliation } from '../domain/no-affiliation';
 
 import { PaymentClassification } from '../domain/payment-classification';
 import { PaymentMethod } from '../domain/payment-method';
@@ -23,6 +24,7 @@ export abstract class AddEmployeeTransaction implements Transaction {
     employee.setPaymentClassification(this.createPaymentClassification());
     employee.setPaymentScheduler(this.createPaymentScheduler());
     employee.setPaymentMethod(this.createPaymentMethod());
+    employee.setAffiliation(new NoAffiliation());
 
     EmployeeRepository.create(employee);
   }

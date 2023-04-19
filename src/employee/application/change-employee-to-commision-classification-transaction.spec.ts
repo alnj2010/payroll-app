@@ -11,6 +11,7 @@ import { ChangeEmployeeToCommissionClassificationTransaction } from './change-em
 import { AddSalaryEmployeeTransaction } from './add-salary-employee-transaction';
 import { CommissionClassification } from '../domain/commission-classification';
 import { BiweeklyScheduler } from '../domain/biweekly-scheduler';
+import { UnionAffiliationsRepository } from '../infraestructure/repositories/union/union-affiliation-repository';
 
 describe('ChangeEmployeeToCommissionClassificationTransaction class', () => {
   beforeEach(async () => {
@@ -21,6 +22,7 @@ describe('ChangeEmployeeToCommissionClassificationTransaction class', () => {
 
   afterEach(async () => {
     EmployeeRepository.clear();
+    UnionAffiliationsRepository.clear();
   });
 
   describe('ChangeEmployeeToCommissionClassificationTransaction execute method', () => {

@@ -9,6 +9,7 @@ import {
 import { EmployeeRepository } from '../infraestructure/repositories/employees/employee-repository';
 import { DeleteEmployeeTransaction } from './delete-employee-transaction';
 import { Employee } from '../domain/employee';
+import { UnionAffiliationsRepository } from '../infraestructure/repositories/union/union-affiliation-repository';
 
 describe('deleteEmployeeTransaction class', () => {
   beforeEach(async () => {
@@ -19,6 +20,7 @@ describe('deleteEmployeeTransaction class', () => {
 
   afterEach(async () => {
     EmployeeRepository.clear();
+    UnionAffiliationsRepository.clear();
   });
 
   describe('deleteSalaryEmployeeTransaction execute method', () => {

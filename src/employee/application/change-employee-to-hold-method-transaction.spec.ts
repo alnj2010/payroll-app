@@ -12,6 +12,7 @@ import { AddHourlyEmployeeTransaction } from './add-hourly-employee-transaction'
 import { MailMethod } from '../domain/mail-method';
 import { HoldMethod } from '../domain/hold-method';
 import { ChangeEmployeeToHoldMethodTransaction } from './change-employee-to-hold-method-transaction';
+import { UnionAffiliationsRepository } from '../infraestructure/repositories/union/union-affiliation-repository';
 
 describe('ChangeEmployeeToHoldMethodTransaction class', () => {
   beforeEach(async () => {
@@ -22,6 +23,7 @@ describe('ChangeEmployeeToHoldMethodTransaction class', () => {
 
   afterEach(async () => {
     EmployeeRepository.clear();
+    UnionAffiliationsRepository.clear();
   });
 
   describe('ChangeEmployeeToHoldMethodTransaction execute method', () => {

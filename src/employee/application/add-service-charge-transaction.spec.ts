@@ -14,7 +14,7 @@ import { AddServiceChargeTransaction } from './add-service-charge-transaction';
 import { UnionAffiliationsRepository } from '../infraestructure/repositories/union/union-affiliation-repository';
 import { AddSalaryEmployeeTransaction } from './add-salary-employee-transaction';
 import { UnionAffiliation } from '../domain/union-affiliation';
-import { AddEmployeeUnionAffiliationTransaction } from './add-employee-union-affiliation-transaction';
+import { ChangeEmployeeToUnionAffiliationTransaction } from './change-employee-to-union-affiliate-transaction';
 
 describe('addServiceChargeTransaction class', () => {
   beforeEach(async () => {
@@ -37,10 +37,10 @@ describe('addServiceChargeTransaction class', () => {
         employeeSalary,
       ).execute();
 
-      new AddEmployeeUnionAffiliationTransaction(
+      new ChangeEmployeeToUnionAffiliationTransaction(
+        employeeId,
         memberId,
         memberDuesRate,
-        employeeId,
       ).execute();
 
       const addServiceChargeTransaction = new AddServiceChargeTransaction(

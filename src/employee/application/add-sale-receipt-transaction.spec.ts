@@ -13,6 +13,7 @@ import { AddCommissionEmployeeTransaction } from './add-commission-employee-tran
 import { CommissionClassification } from '../domain/commission-classification';
 import { AddSaleReceiptTransaction } from './add-sale-receipt-transaction';
 import { AddSalaryEmployeeTransaction } from './add-salary-employee-transaction';
+import { UnionAffiliationsRepository } from '../infraestructure/repositories/union/union-affiliation-repository';
 
 describe('addSaleReceiptTransaction class', () => {
   beforeEach(async () => {
@@ -23,6 +24,7 @@ describe('addSaleReceiptTransaction class', () => {
 
   afterEach(async () => {
     EmployeeRepository.clear();
+    UnionAffiliationsRepository.clear();
   });
 
   describe('addSaleReceiptTransaction execute method', () => {

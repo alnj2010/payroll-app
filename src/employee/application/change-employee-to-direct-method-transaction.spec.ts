@@ -12,6 +12,7 @@ import { EmployeeRepository } from '../infraestructure/repositories/employees/em
 import { ChangeEmployeeToDirectMethodTransaction } from './change-employee-to-direct-method-transaction';
 import { AddHourlyEmployeeTransaction } from './add-hourly-employee-transaction';
 import { DirectMethod } from '../domain/direct-method';
+import { UnionAffiliationsRepository } from '../infraestructure/repositories/union/union-affiliation-repository';
 
 describe('ChangeEmployeeToDirectMethodTransaction class', () => {
   beforeEach(async () => {
@@ -22,6 +23,7 @@ describe('ChangeEmployeeToDirectMethodTransaction class', () => {
 
   afterEach(async () => {
     EmployeeRepository.clear();
+    UnionAffiliationsRepository.clear();
   });
 
   describe('ChangeEmployeeToDirectMethodTransaction execute method', () => {

@@ -9,6 +9,7 @@ import {
 import { EmployeeRepository } from '../infraestructure/repositories/employees/employee-repository';
 import { AddHourlyEmployeeTransaction } from './add-hourly-employee-transaction';
 import { ChangeEmployeeNameTransaction } from './change-employee-name-transaction';
+import { UnionAffiliationsRepository } from '../infraestructure/repositories/union/union-affiliation-repository';
 
 describe('ChangeEmployeeNameTransaction class', () => {
   beforeEach(async () => {
@@ -19,6 +20,7 @@ describe('ChangeEmployeeNameTransaction class', () => {
 
   afterEach(async () => {
     EmployeeRepository.clear();
+    UnionAffiliationsRepository.clear();
   });
 
   describe('ChangeEmployeeNameTransaction execute method', () => {

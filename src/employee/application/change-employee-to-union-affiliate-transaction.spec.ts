@@ -4,15 +4,16 @@ import {
   employeeId,
   employeeName,
   employeehourlyRate,
-  employeeMailAddress,
+  memberId,
+  memberDuesRate,
 } from '../../../test/dummies';
 import { EmployeeRepository } from '../infraestructure/repositories/employees/employee-repository';
-import { ChangeEmployeeToMailMethodTransaction } from './change-employee-to-mail-method-transaction';
 import { AddHourlyEmployeeTransaction } from './add-hourly-employee-transaction';
-import { MailMethod } from '../domain/mail-method';
 import { UnionAffiliationsRepository } from '../infraestructure/repositories/union/union-affiliation-repository';
+import { UnionAffiliation } from '../domain/union-affiliation';
+import { ChangeEmployeeToUnionAffiliationTransaction } from './change-employee-to-union-affiliate-transaction';
 
-describe('ChangeEmployeeToMailMethodTransaction class', () => {
+describe('ChangeEmployeeToUnionAffiliationTransaction class', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
@@ -24,8 +25,8 @@ describe('ChangeEmployeeToMailMethodTransaction class', () => {
     UnionAffiliationsRepository.clear();
   });
 
-  describe('ChangeEmployeeToMailMethodTransaction execute method', () => {
-    it('When execute method is called then the employee method is updated to mail', () => {
+  describe('ChangeEmployeeToUnionAffiliationTransaction execute method', () => {
+    it('When execute method is called then the employee affiliation is updated to Union', () => {
       new AddHourlyEmployeeTransaction(
         employeeId,
         employeeName,
@@ -33,25 +34,27 @@ describe('ChangeEmployeeToMailMethodTransaction class', () => {
         employeehourlyRate,
       ).execute();
 
-      const transaction = new ChangeEmployeeToMailMethodTransaction(
+      const transaction = new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
-        employeeMailAddress,
+        memberId,
+        memberDuesRate,
       );
       transaction.execute();
 
-      const employee = EmployeeRepository.read(employeeId);
-      const paymentMethod = employee.getPaymentMethod() as MailMethod;
-
+      const employee = UnionAffiliationsRepository.read(memberId);
+      const affiliation = employee.getAffiliation() as UnionAffiliation;
       expect(employee.getId()).toEqual(employeeId);
-      expect(employee.getPaymentMethod()).toBeInstanceOf(MailMethod);
-      expect(paymentMethod.getMail()).toEqual(employeeMailAddress);
+      expect(affiliation).toBeInstanceOf(UnionAffiliation);
+      expect(affiliation.getDueRate()).toBe(memberDuesRate);
+      expect(affiliation.getMemberId()).toBe(memberId);
     });
   });
 
   it('When execute method is called but employee is not founded then occurs a exeception', () => {
-    const transaction = new ChangeEmployeeToMailMethodTransaction(
+    const transaction = new ChangeEmployeeToUnionAffiliationTransaction(
       employeeId,
-      employeeMailAddress,
+      memberId,
+      memberDuesRate,
     );
 
     expect.assertions(1);

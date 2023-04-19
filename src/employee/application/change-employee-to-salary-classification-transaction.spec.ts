@@ -11,6 +11,7 @@ import { ChangeEmployeeToSalaryClassificationTransaction } from './change-employ
 import { AddHourlyEmployeeTransaction } from './add-hourly-employee-transaction';
 import { SalaryClassification } from '../domain/salary-classification';
 import { MonthlyScheduler } from '../domain/monthly-scheduler';
+import { UnionAffiliationsRepository } from '../infraestructure/repositories/union/union-affiliation-repository';
 
 describe('ChangeEmployeeToSalaryClassificationTransaction class', () => {
   beforeEach(async () => {
@@ -21,6 +22,7 @@ describe('ChangeEmployeeToSalaryClassificationTransaction class', () => {
 
   afterEach(async () => {
     EmployeeRepository.clear();
+    UnionAffiliationsRepository.clear();
   });
 
   describe('ChangeEmployeeToSalaryClassificationTransaction execute method', () => {

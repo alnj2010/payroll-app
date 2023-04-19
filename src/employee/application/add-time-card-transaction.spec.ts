@@ -13,6 +13,7 @@ import { AddHourlyEmployeeTransaction } from './add-hourly-employee-transaction'
 import { HourlyClassification } from '../domain/hourly-classification';
 import { AddTimeCardTransaction } from './add-time-card-transaction';
 import { AddSalaryEmployeeTransaction } from './add-salary-employee-transaction';
+import { UnionAffiliationsRepository } from '../infraestructure/repositories/union/union-affiliation-repository';
 
 describe('addTimeCardTransaction class', () => {
   beforeEach(async () => {
@@ -23,6 +24,7 @@ describe('addTimeCardTransaction class', () => {
 
   afterEach(async () => {
     EmployeeRepository.clear();
+    UnionAffiliationsRepository.clear();
   });
 
   describe('addTimeCardTransaction execute method', () => {
