@@ -10,7 +10,6 @@ import {
 import { EmployeeRepository } from '../infraestructure/repositories/employees/employee-repository';
 import { AddHourlyEmployeeTransaction } from './add-hourly-employee-transaction';
 import { UnionAffiliationsRepository } from '../infraestructure/repositories/union/union-affiliation-repository';
-import { UnionAffiliation } from '../domain/union-affiliation';
 import { ChangeEmployeeToUnionAffiliationTransaction } from './change-employee-to-union-affiliate-transaction';
 import { ChangeEmployeeToNoAffiliationTransaction } from './change-employee-to-no-affiliation-transaction';
 import { NoAffiliation } from '../domain/no-affiliation';
@@ -44,7 +43,6 @@ describe('ChangeEmployeeToNoAffiliationTransaction class', () => {
 
       const transaction = new ChangeEmployeeToNoAffiliationTransaction(
         employeeId,
-        memberId,
       );
       transaction.execute();
 
