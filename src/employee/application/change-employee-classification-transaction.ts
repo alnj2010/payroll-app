@@ -3,7 +3,7 @@ import { PaymentClassification } from '../domain/payment-classification';
 import { PaymentScheduler } from '../domain/payment-scheduler';
 import { ChangeEmployeeTransaction } from './change-employee-transaction';
 
-export abstract class ChangeEmployeePaymentTransaction extends ChangeEmployeeTransaction {
+export abstract class ChangeEmployeeClassificationTransaction extends ChangeEmployeeTransaction {
   constructor(id: string) {
     super(id);
   }

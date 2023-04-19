@@ -5,14 +5,15 @@ import {
   employeeName,
   employeehourlyRate,
   employeeSalary,
+  employeeBank,
+  employeeBankAccount,
 } from '../../../test/dummies';
 import { EmployeeRepository } from '../infraestructure/repositories/employees/employee-repository';
-import { ChangeEmployeeToSalaryPaymentTransaction } from './change-employee-to-salary-payment-transaction';
+import { ChangeEmployeeToDirectMethodTransaction } from './change-employee-to-direct-method-transaction';
 import { AddHourlyEmployeeTransaction } from './add-hourly-employee-transaction';
-import { SalaryClassification } from '../domain/salary-classification';
-import { MonthlyScheduler } from '../domain/monthly-scheduler';
+import { DirectMethod } from '../domain/direct-method';
 
-describe('ChangeEmployeeToSalaryPaymentTransaction class', () => {
+describe('ChangeEmployeeToDirectMethodTransaction class', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
@@ -23,8 +24,8 @@ describe('ChangeEmployeeToSalaryPaymentTransaction class', () => {
     EmployeeRepository.clear();
   });
 
-  describe('ChangeEmployeeToSalaryPaymentTransaction execute method', () => {
-    it('When execute method is called then the employee payment is updated to salary', () => {
+  describe('ChangeEmployeeToDirectMethodTransaction execute method', () => {
+    it('When execute method is called then the employee method is updated to direct', () => {
       new AddHourlyEmployeeTransaction(
         employeeId,
         employeeName,
@@ -32,26 +33,28 @@ describe('ChangeEmployeeToSalaryPaymentTransaction class', () => {
         employeehourlyRate,
       ).execute();
 
-      const transaction = new ChangeEmployeeToSalaryPaymentTransaction(
+      const transaction = new ChangeEmployeeToDirectMethodTransaction(
         employeeId,
-        employeeSalary,
+        employeeBank,
+        employeeBankAccount,
       );
       transaction.execute();
 
       const employee = EmployeeRepository.read(employeeId);
+      const paymentMethod = employee.getPaymentMethod() as DirectMethod;
 
       expect(employee.getId()).toEqual(employeeId);
-      expect(employee.getPaymentClassification()).toBeInstanceOf(
-        SalaryClassification,
-      );
-      expect(employee.getPaymentScheduler()).toBeInstanceOf(MonthlyScheduler);
+      expect(employee.getPaymentMethod()).toBeInstanceOf(DirectMethod);
+      expect(paymentMethod.getAccount()).toEqual(employeeBankAccount);
+      expect(paymentMethod.getBank()).toEqual(employeeBank);
     });
   });
 
   it('When execute method is called but employee is not founded then occurs a exeception', () => {
-    const transaction = new ChangeEmployeeToSalaryPaymentTransaction(
+    const transaction = new ChangeEmployeeToDirectMethodTransaction(
       employeeId,
-      employeeSalary,
+      employeeBank,
+      employeeBankAccount,
     );
 
     expect.assertions(1);

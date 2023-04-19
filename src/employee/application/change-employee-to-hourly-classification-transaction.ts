@@ -2,9 +2,9 @@ import { HourlyClassification } from '../domain/hourly-classification';
 import { PaymentClassification } from '../domain/payment-classification';
 import { PaymentScheduler } from '../domain/payment-scheduler';
 import { WeeklyScheduler } from '../domain/weekly-scheduler';
-import { ChangeEmployeePaymentTransaction } from './change-employee-payment-transaction';
+import { ChangeEmployeeClassificationTransaction } from './change-employee-classification-transaction';
 
-export class ChangeEmployeeToHourlyPaymentTransaction extends ChangeEmployeePaymentTransaction {
+export class ChangeEmployeeToHourlyClassificationTransaction extends ChangeEmployeeClassificationTransaction {
   constructor(id: string, private hourlyRate: number) {
     super(id);
   }

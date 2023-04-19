@@ -2,9 +2,9 @@ import { SalaryClassification } from '../domain/salary-classification';
 import { PaymentClassification } from '../domain/payment-classification';
 import { PaymentScheduler } from '../domain/payment-scheduler';
 import { MonthlyScheduler } from '../domain/monthly-scheduler';
-import { ChangeEmployeePaymentTransaction } from './change-employee-payment-transaction';
+import { ChangeEmployeeClassificationTransaction } from './change-employee-classification-transaction';
 
-export class ChangeEmployeeToSalaryPaymentTransaction extends ChangeEmployeePaymentTransaction {
+export class ChangeEmployeeToSalaryClassificationTransaction extends ChangeEmployeeClassificationTransaction {
   constructor(id: string, private salary: number) {
     super(id);
   }

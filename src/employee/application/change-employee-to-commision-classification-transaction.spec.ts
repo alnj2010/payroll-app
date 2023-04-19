@@ -7,12 +7,12 @@ import {
   employeeCommissionRate,
 } from '../../../test/dummies';
 import { EmployeeRepository } from '../infraestructure/repositories/employees/employee-repository';
-import { ChangeEmployeeToCommissionPaymentTransaction } from './change-employee-to-commission-payment-transaction';
+import { ChangeEmployeeToCommissionClassificationTransaction } from './change-employee-to-commission-classification-transaction';
 import { AddSalaryEmployeeTransaction } from './add-salary-employee-transaction';
 import { CommissionClassification } from '../domain/commission-classification';
 import { BiweeklyScheduler } from '../domain/biweekly-scheduler';
 
-describe('ChangeEmployeeToCommissionPaymentTransaction class', () => {
+describe('ChangeEmployeeToCommissionClassificationTransaction class', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
@@ -23,7 +23,7 @@ describe('ChangeEmployeeToCommissionPaymentTransaction class', () => {
     EmployeeRepository.clear();
   });
 
-  describe('ChangeEmployeeToCommissionPaymentTransaction execute method', () => {
+  describe('ChangeEmployeeToCommissionClassificationTransaction execute method', () => {
     it('When execute method is called then the employee payment is updated to commission', () => {
       new AddSalaryEmployeeTransaction(
         employeeId,
@@ -32,11 +32,12 @@ describe('ChangeEmployeeToCommissionPaymentTransaction class', () => {
         employeeSalary,
       ).execute();
 
-      const transaction = new ChangeEmployeeToCommissionPaymentTransaction(
-        employeeId,
-        employeeSalary,
-        employeeCommissionRate,
-      );
+      const transaction =
+        new ChangeEmployeeToCommissionClassificationTransaction(
+          employeeId,
+          employeeSalary,
+          employeeCommissionRate,
+        );
       transaction.execute();
 
       const employee = EmployeeRepository.read(employeeId);
@@ -50,7 +51,7 @@ describe('ChangeEmployeeToCommissionPaymentTransaction class', () => {
   });
 
   it('When execute method is called but employee is not founded then occurs a exeception', () => {
-    const transaction = new ChangeEmployeeToCommissionPaymentTransaction(
+    const transaction = new ChangeEmployeeToCommissionClassificationTransaction(
       employeeId,
       employeeSalary,
       employeeCommissionRate,
