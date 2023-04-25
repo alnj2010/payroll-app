@@ -7,7 +7,7 @@ import {
   memberDuesRate,
   memberId,
   serviceChargeAmount,
-  serviceChargeId,
+  serviceChargeDate,
 } from '../../../test/dummies';
 import { EmployeeRepository } from '../infraestructure/repositories/employees/employee-repository';
 import { AddServiceChargeTransaction } from './add-service-charge-transaction';
@@ -44,7 +44,7 @@ describe('addServiceChargeTransaction class', () => {
       ).execute();
 
       const addServiceChargeTransaction = new AddServiceChargeTransaction(
-        serviceChargeId,
+        serviceChargeDate,
         memberId,
         serviceChargeAmount,
       );
@@ -53,15 +53,15 @@ describe('addServiceChargeTransaction class', () => {
 
       const employee = UnionAffiliationsRepository.read(memberId);
       const affiliation = employee.getAffiliation() as UnionAffiliation;
-      const serviceCharge = affiliation.getServiceCharge(serviceChargeId);
+      const serviceCharge = affiliation.getServiceCharge(serviceChargeDate);
 
       expect(serviceCharge.getAmount()).toBe(serviceChargeAmount);
-      expect(serviceCharge.getId()).toBe(serviceChargeId);
+      expect(serviceCharge.getDate()).toBe(serviceChargeDate);
     });
 
     it('When execute method is called but affiliation is not founded then occurs a exeception', () => {
       const addServiceChargeTransaction = new AddServiceChargeTransaction(
-        serviceChargeId,
+        serviceChargeDate,
         memberId,
         serviceChargeAmount,
       );

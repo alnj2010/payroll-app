@@ -1,4 +1,5 @@
 import { Affiliation } from './affiliation';
+import { Paycheck } from './paycheck';
 import { PaymentClassification } from './payment-classification';
 import { PaymentMethod } from './payment-method';
 import { PaymentScheduler } from './payment-scheduler';
@@ -14,6 +15,26 @@ export class Employee {
     private name: string,
     private address: string,
   ) {}
+
+  public isPayDay(date: string): boolean {
+    return this.paymentScheduler.isPayDay(date);
+  }
+
+  public payDay(date): Paycheck {
+    const paycheck = new Paycheck(
+      date,
+      this.paymentScheduler.calculatePayPeriodStartDate(date),
+    );
+    const grossPay = this.paymentClassification.calculatePay(paycheck);
+    const deduction = this.affiliation.calculateDeduction(paycheck);
+    const netPay = grossPay - deduction;
+
+    paycheck.setDisposition('Hold');
+    paycheck.setGrossPay(grossPay);
+    paycheck.setDeduction(deduction);
+    paycheck.setNetPay(netPay);
+    return paycheck;
+  }
 
   public getId(): string {
     return this.id;

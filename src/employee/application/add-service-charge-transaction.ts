@@ -5,7 +5,7 @@ import { UnionAffiliationsRepository } from '../infraestructure/repositories/uni
 
 export class AddServiceChargeTransaction implements Transaction {
   constructor(
-    private serviceChargeId: string,
+    private serviceChargeDate: string,
     private memberId: string,
     private amount: number,
   ) {}
@@ -15,7 +15,7 @@ export class AddServiceChargeTransaction implements Transaction {
       const employee = UnionAffiliationsRepository.read(this.memberId);
       const affiliation = employee.getAffiliation() as UnionAffiliation;
       affiliation.addServiceCharge(
-        new ServiceCharge(this.serviceChargeId, this.amount),
+        new ServiceCharge(this.serviceChargeDate, this.amount),
       );
     } catch (error) {
       throw error;

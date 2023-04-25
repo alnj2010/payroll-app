@@ -15,6 +15,10 @@ export class EmployeeRepository {
     }
   }
 
+  static readAll(): Employee[] {
+    return Array.from(DB.employees, ([, value]) => value);
+  }
+
   static delete(id: string) {
     return DB.employees.delete(id);
   }

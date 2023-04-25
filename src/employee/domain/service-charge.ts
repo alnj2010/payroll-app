@@ -1,7 +1,7 @@
 export class ServiceCharge {
   constructor(private id: string, private amount: number) {}
 
-  public getId(): string {
+  public getDate(): string {
     return this.id;
   }
 

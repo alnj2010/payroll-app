@@ -1,12 +1,15 @@
+import { Paycheck } from './paycheck';
 import { PaymentClassification } from './payment-classification';
 import { SaleReceipt } from './sale-receipt';
 
-export class CommissionClassification extends PaymentClassification {
+export class CommissionClassification implements PaymentClassification {
   private saleReceipts = new Map<string, SaleReceipt>();
 
-  constructor(private salary: number, private commissionRate: number) {
-    super();
+  calculatePay(paycheck: Paycheck): number {
+    return 0;
   }
+
+  constructor(private salary: number, private commissionRate: number) {}
 
   public getCommissionRate(): number {
     return this.commissionRate;
