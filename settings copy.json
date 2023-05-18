@@ -1,0 +1,40 @@
+{
+    "eslint.format.enable": true,
+    "files.autoSave": "afterDelay",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "[javascript]": {
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "workbench.iconTheme": "vscode-icons",
+    "plantuml.commandArgs": [],
+    "plantuml.diagramsRoot": "/Users/abrahamnavarro/Documents/repositorios/wmt-chile-ecosystem-arch/src/",
+    "plantuml.includepaths": [
+      "/Users/abrahamnavarro/Documents/repositorios/wmt-chile-ecosystem-arch/resources/c4-plantuml"
+    ],
+    "editor.largeFileOptimizations": false,
+    "workbench.editor.untitled.hint": "hidden",
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[python]": {
+      "editor.formatOnType": true
+    },
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnSave": true,
+    "[typescript]": {
+      "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+  }
+
+  /*
+  csv to table
+  dev containers
+  docker
+  eslint
+  prettier
+  gitlens
+  jest
+  plantUML
+  vscode-icons
+  */
+  

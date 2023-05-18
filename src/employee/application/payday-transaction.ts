@@ -16,7 +16,6 @@ export class PaydayTransaction implements Transaction {
     employees.forEach((employee) => {
       if (employee.isPayDay(this.date)) {
         const paycheck = employee.payDay(this.date);
-
         this.paychecks.set(employee.getId(), paycheck);
       }
     });

@@ -29,10 +29,13 @@ export class Employee {
     const deduction = this.affiliation.calculateDeduction(paycheck);
     const netPay = grossPay - deduction;
 
-    paycheck.setDisposition('Hold');
+    paycheck.setDisposition(this.paymentMethod.getDisposition());
     paycheck.setGrossPay(grossPay);
     paycheck.setDeduction(deduction);
     paycheck.setNetPay(netPay);
+
+    this.paymentMethod.sendPaycheck(paycheck);
+
     return paycheck;
   }
 

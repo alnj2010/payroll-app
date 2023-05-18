@@ -5,7 +5,7 @@ export class SalaryClassification implements PaymentClassification {
   constructor(private salary: number) {}
 
   calculatePay(paycheck: Paycheck): number {
-    return 0;
+    return this.salary;
   }
   public getSalary() {
     return this.salary;
