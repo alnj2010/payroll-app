@@ -17,7 +17,7 @@ import { UnionAffiliation } from './union-affiliation';
 import { ChangeEmployeeToUnionAffiliationTransaction } from './change-employee-to-union-affiliate-transaction';
 
 describe('addServiceChargeTransaction class', () => {
-  const employeeRepository = EmployeeRepository.getInstance();
+  const employeeRepository = new EmployeeRepository();
   const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -36,11 +36,13 @@ describe('addServiceChargeTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
       ).execute();
 
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
+        employeeRepository,
         memberId,
         memberDuesRate,
       ).execute();

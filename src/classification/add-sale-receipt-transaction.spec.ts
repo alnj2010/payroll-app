@@ -13,11 +13,9 @@ import { AddCommissionEmployeeTransaction } from './add-commission-employee-tran
 import { CommissionClassification } from './commission-classification';
 import { AddSaleReceiptTransaction } from './add-sale-receipt-transaction';
 import { AddSalaryEmployeeTransaction } from './add-salary-employee-transaction';
-import { UnionAffiliationsRepository } from '../payroll-database-implementation/union-affiliation-repository';
 
 describe('addSaleReceiptTransaction class', () => {
-  const employeeRepository = EmployeeRepository.getInstance();
-  const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
+  const employeeRepository = new EmployeeRepository();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
@@ -26,7 +24,6 @@ describe('addSaleReceiptTransaction class', () => {
 
   afterEach(async () => {
     employeeRepository.clear();
-    unionAffiliationRepository.clear();
   });
 
   describe('addSaleReceiptTransaction execute method', () => {
@@ -35,6 +32,7 @@ describe('addSaleReceiptTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
         employeeCommissionRate,
       ).execute();
@@ -47,6 +45,7 @@ describe('addSaleReceiptTransaction class', () => {
         employee.getId(),
         saleReceiptDate,
         saleReceiptAmount,
+        employeeRepository,
       );
 
       addSaleReceiptTransaction.execute();
@@ -62,6 +61,7 @@ describe('addSaleReceiptTransaction class', () => {
         employeeId,
         saleReceiptDate,
         saleReceiptAmount,
+        employeeRepository,
       );
 
       expect.assertions(1);
@@ -77,6 +77,7 @@ describe('addSaleReceiptTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
       ).execute();
 
@@ -86,6 +87,7 @@ describe('addSaleReceiptTransaction class', () => {
         employee.getId(),
         saleReceiptDate,
         saleReceiptAmount,
+        employeeRepository,
       );
 
       expect.assertions(1);

@@ -11,11 +11,9 @@ import { ChangeEmployeeToHourlyClassificationTransaction } from './change-employ
 import { AddSalaryEmployeeTransaction } from './add-salary-employee-transaction';
 import { HourlyClassification } from './hourly-classification';
 import { WeeklyScheduler } from '../schedule/weekly-scheduler';
-import { UnionAffiliationsRepository } from '../payroll-database-implementation/union-affiliation-repository';
 
 describe('ChangeEmployeeToHourlyClassificationTransaction class', () => {
-  const employeeRepository = EmployeeRepository.getInstance();
-  const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
+  const employeeRepository = new EmployeeRepository();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
@@ -24,7 +22,6 @@ describe('ChangeEmployeeToHourlyClassificationTransaction class', () => {
 
   afterEach(async () => {
     employeeRepository.clear();
-    unionAffiliationRepository.clear();
   });
 
   describe('ChangeEmployeeToHourlyClassificationTransaction execute method', () => {
@@ -33,11 +30,13 @@ describe('ChangeEmployeeToHourlyClassificationTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
       ).execute();
 
       const transaction = new ChangeEmployeeToHourlyClassificationTransaction(
         employeeId,
+        employeeRepository,
         employeehourlyRate,
       );
       transaction.execute();
@@ -55,6 +54,7 @@ describe('ChangeEmployeeToHourlyClassificationTransaction class', () => {
   it('When execute method is called but employee is not founded then occurs a exeception', () => {
     const transaction = new ChangeEmployeeToHourlyClassificationTransaction(
       employeeId,
+      employeeRepository,
       employeeSalary,
     );
 

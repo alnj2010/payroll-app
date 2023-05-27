@@ -9,11 +9,9 @@ import {
 import { EmployeeRepository } from '../payroll-database-implementation/employee-repository';
 import { DeleteEmployeeTransaction } from './delete-employee-transaction';
 import { Employee } from '../domain/employee';
-import { UnionAffiliationsRepository } from '../payroll-database-implementation/union-affiliation-repository';
 
 describe('deleteEmployeeTransaction class', () => {
-  const employeeRepository = EmployeeRepository.getInstance();
-  const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
+  const employeeRepository = new EmployeeRepository();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
@@ -22,7 +20,6 @@ describe('deleteEmployeeTransaction class', () => {
 
   afterEach(async () => {
     employeeRepository.clear();
-    unionAffiliationRepository.clear();
   });
 
   describe('deleteSalaryEmployeeTransaction execute method', () => {
@@ -31,6 +28,7 @@ describe('deleteEmployeeTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
       );
       addEmployeeTransaction.execute();
@@ -38,6 +36,7 @@ describe('deleteEmployeeTransaction class', () => {
 
       const deleteEmployeeTransaction = new DeleteEmployeeTransaction(
         employeeId,
+        employeeRepository,
       );
 
       deleteEmployeeTransaction.execute();

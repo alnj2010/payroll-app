@@ -58,7 +58,7 @@ function assertPaycheck(
 }
 
 describe('paydayTransaction class', () => {
-  const employeeRepository = EmployeeRepository.getInstance();
+  const employeeRepository = new EmployeeRepository();
   const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -73,7 +73,10 @@ describe('paydayTransaction class', () => {
 
   describe('paydayTransaction execute method - hourly employees', () => {
     it('When execute method is called on friday but there is not a employee to paid then return 0 paychecks', () => {
-      const transaction = new PaydayTransaction(dateFridayDummy);
+      const transaction = new PaydayTransaction(
+        dateFridayDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -85,6 +88,7 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
@@ -92,9 +96,13 @@ describe('paydayTransaction class', () => {
         employeeId,
         timecardDate,
         timecardHours,
+        employeeRepository,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateOtherThanFridayDummy);
+      const transaction = new PaydayTransaction(
+        dateOtherThanFridayDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -109,10 +117,14 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateFridayDummy);
+      const transaction = new PaydayTransaction(
+        dateFridayDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -127,6 +139,7 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
@@ -134,9 +147,13 @@ describe('paydayTransaction class', () => {
         employeeId,
         timecardOutDate,
         timecardHours,
+        employeeRepository,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateFridayDummy);
+      const transaction = new PaydayTransaction(
+        dateFridayDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -151,6 +168,7 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
@@ -158,9 +176,13 @@ describe('paydayTransaction class', () => {
         employeeId,
         timecardDate,
         timecardHours,
+        employeeRepository,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateFridayDummy);
+      const transaction = new PaydayTransaction(
+        dateFridayDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -182,6 +204,7 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
@@ -189,15 +212,20 @@ describe('paydayTransaction class', () => {
         employeeId,
         timecardDate,
         timecardHours,
+        employeeRepository,
       ).execute();
 
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
+        employeeRepository,
         memberId,
         memberDuesRate,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateFridayDummy);
+      const transaction = new PaydayTransaction(
+        dateFridayDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -219,6 +247,7 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
@@ -226,10 +255,12 @@ describe('paydayTransaction class', () => {
         employeeId,
         timecardDate,
         timecardHours,
+        employeeRepository,
       ).execute();
 
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
+        employeeRepository,
         memberId,
         memberDuesRate,
       ).execute();
@@ -240,7 +271,10 @@ describe('paydayTransaction class', () => {
         serviceChargeAmount,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateFridayDummy);
+      const transaction = new PaydayTransaction(
+        dateFridayDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -263,6 +297,7 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
@@ -270,10 +305,12 @@ describe('paydayTransaction class', () => {
         employeeId,
         timecardDate,
         timecardHours,
+        employeeRepository,
       ).execute();
 
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
+        employeeRepository,
         memberId,
         memberDuesRate,
       ).execute();
@@ -284,7 +321,10 @@ describe('paydayTransaction class', () => {
         serviceChargeAmount,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateFridayDummy);
+      const transaction = new PaydayTransaction(
+        dateFridayDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -305,6 +345,7 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
@@ -312,15 +353,20 @@ describe('paydayTransaction class', () => {
         employeeId,
         timecardDate,
         timecardHours,
+        employeeRepository,
       ).execute();
 
       new ChangeEmployeeToDirectMethodTransaction(
         employeeId,
+        employeeRepository,
         employeeBank,
         employeeBankAccount,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateFridayDummy);
+      const transaction = new PaydayTransaction(
+        dateFridayDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -342,6 +388,7 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
@@ -349,14 +396,19 @@ describe('paydayTransaction class', () => {
         employeeId,
         timecardDate,
         timecardHours,
+        employeeRepository,
       ).execute();
 
       new ChangeEmployeeToMailMethodTransaction(
         employeeId,
+        employeeRepository,
         employeeMailAddress,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateFridayDummy);
+      const transaction = new PaydayTransaction(
+        dateFridayDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -376,7 +428,10 @@ describe('paydayTransaction class', () => {
 
   describe('paydayTransaction execute method - salary employees', () => {
     it('When execute method is called in last day of month but there is not a employee to paid then return 0 paychecks', () => {
-      const transaction = new PaydayTransaction(dateLastDayOfMonthDummy);
+      const transaction = new PaydayTransaction(
+        dateLastDayOfMonthDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -388,11 +443,13 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
       ).execute();
 
       const transaction = new PaydayTransaction(
         dateOtherThanLastDayOfMonthDummy,
+        employeeRepository,
       );
       transaction.execute();
 
@@ -408,10 +465,14 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateLastDayOfMonthDummy);
+      const transaction = new PaydayTransaction(
+        dateLastDayOfMonthDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -433,16 +494,21 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
       ).execute();
 
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
+        employeeRepository,
         memberId,
         memberDuesRate,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateLastDayOfMonthDummy);
+      const transaction = new PaydayTransaction(
+        dateLastDayOfMonthDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -462,7 +528,10 @@ describe('paydayTransaction class', () => {
 
   describe('paydayTransaction execute method - commissioned employees', () => {
     it('When execute method is called in the middle of the month but there is not a employee to paid then return 0 paychecks', () => {
-      const transaction = new PaydayTransaction(dateMiddleDayOfMonth);
+      const transaction = new PaydayTransaction(
+        dateMiddleDayOfMonth,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -474,11 +543,15 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
         employeeCommissionRate,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateOtherThanMiddleDayOfMonth);
+      const transaction = new PaydayTransaction(
+        dateOtherThanMiddleDayOfMonth,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -493,11 +566,15 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
         employeeCommissionRate,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateLastDayOfMonthDummy);
+      const transaction = new PaydayTransaction(
+        dateLastDayOfMonthDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -519,6 +596,7 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
         employeeCommissionRate,
       ).execute();
@@ -526,9 +604,13 @@ describe('paydayTransaction class', () => {
         employeeId,
         dateMiddleDayOfMonth,
         saleReceiptAmount,
+        employeeRepository,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateLastDayOfMonthDummy);
+      const transaction = new PaydayTransaction(
+        dateLastDayOfMonthDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -550,6 +632,7 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
         employeeCommissionRate,
       ).execute();
@@ -558,9 +641,13 @@ describe('paydayTransaction class', () => {
         employeeId,
         dateFirstDayOfMonthDummy,
         saleReceiptAmount,
+        employeeRepository,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateMiddleDayOfMonth);
+      const transaction = new PaydayTransaction(
+        dateMiddleDayOfMonth,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -582,6 +669,7 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
         employeeCommissionRate,
       ).execute();
@@ -590,9 +678,13 @@ describe('paydayTransaction class', () => {
         employeeId,
         dateLastDayOfMonthDummy,
         saleReceiptAmount,
+        employeeRepository,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateLastDayOfMonthDummy);
+      const transaction = new PaydayTransaction(
+        dateLastDayOfMonthDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -614,6 +706,7 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
         employeeCommissionRate,
       ).execute();
@@ -622,15 +715,20 @@ describe('paydayTransaction class', () => {
         employeeId,
         dateLastDayOfMonthDummy,
         saleReceiptAmount,
+        employeeRepository,
       ).execute();
 
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
+        employeeRepository,
         memberId,
         memberDuesRate,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateLastDayOfMonthDummy);
+      const transaction = new PaydayTransaction(
+        dateLastDayOfMonthDummy,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();
@@ -654,6 +752,7 @@ describe('paydayTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
         employeeCommissionRate,
       ).execute();
@@ -662,15 +761,20 @@ describe('paydayTransaction class', () => {
         employeeId,
         dateMiddleDayOfMonth,
         saleReceiptAmount,
+        employeeRepository,
       ).execute();
 
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
+        employeeRepository,
         memberId,
         memberDuesRate,
       ).execute();
 
-      const transaction = new PaydayTransaction(dateMiddleDayOfMonth);
+      const transaction = new PaydayTransaction(
+        dateMiddleDayOfMonth,
+        employeeRepository,
+      );
       transaction.execute();
 
       const paychecks: Map<string, Paycheck> = transaction.getPaychecks();

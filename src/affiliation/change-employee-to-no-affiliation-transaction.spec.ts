@@ -15,7 +15,7 @@ import { ChangeEmployeeToNoAffiliationTransaction } from './change-employee-to-n
 import { NoAffiliation } from './no-affiliation';
 
 describe('ChangeEmployeeToNoAffiliationTransaction class', () => {
-  const employeeRepository = EmployeeRepository.getInstance();
+  const employeeRepository = new EmployeeRepository();
   const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -34,17 +34,20 @@ describe('ChangeEmployeeToNoAffiliationTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
+        employeeRepository,
         memberId,
         memberDuesRate,
       ).execute();
 
       const transaction = new ChangeEmployeeToNoAffiliationTransaction(
         employeeId,
+        employeeRepository,
       );
       transaction.execute();
 
@@ -62,6 +65,7 @@ describe('ChangeEmployeeToNoAffiliationTransaction class', () => {
   it('When execute method is called but employee is not founded then occurs a exeception', () => {
     const transaction = new ChangeEmployeeToUnionAffiliationTransaction(
       employeeId,
+      employeeRepository,
       memberId,
       memberDuesRate,
     );

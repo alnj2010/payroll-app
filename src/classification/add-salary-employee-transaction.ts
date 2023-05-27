@@ -5,16 +5,18 @@ import { AddEmployeeTransaction } from './add-employee-transaction';
 import { PaymentClassification } from '../domain/payment-classification';
 import { PaymentScheduler } from '../domain/payment-scheduler';
 import { PaymentMethod } from '../domain/payment-method';
+import { ERepository } from 'src/payroll-database/e-repository';
 
 export class AddSalaryEmployeeTransaction extends AddEmployeeTransaction {
   constructor(
     id: string,
     name: string,
     address: string,
+    employeeRepository: ERepository,
 
     private salary: number,
   ) {
-    super(id, name, address);
+    super(id, name, address, employeeRepository);
   }
 
   protected createPaymentClassification(): PaymentClassification {

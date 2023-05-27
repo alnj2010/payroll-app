@@ -3,14 +3,16 @@ import { Employee } from '../domain/employee';
 import { UnionAffiliation } from './union-affiliation';
 import { UnionAffiliationsRepository } from '../payroll-database-implementation/union-affiliation-repository';
 import { ChangeEmployeeAffiliationTransaction } from './change-employee-affiliation-transaction';
+import { ERepository } from 'src/payroll-database/e-repository';
 
 export class ChangeEmployeeToUnionAffiliationTransaction extends ChangeEmployeeAffiliationTransaction {
   constructor(
     id: string,
+    employeeRepository: ERepository,
     private memberId: string,
     private memberDuesRate: number,
   ) {
-    super(id);
+    super(id, employeeRepository);
   }
 
   protected getAffiliation(): Affiliation {

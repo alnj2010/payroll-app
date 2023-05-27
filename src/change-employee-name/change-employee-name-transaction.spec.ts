@@ -9,11 +9,9 @@ import {
 import { EmployeeRepository } from '../payroll-database-implementation/employee-repository';
 import { AddHourlyEmployeeTransaction } from '../classification/add-hourly-employee-transaction';
 import { ChangeEmployeeNameTransaction } from './change-employee-name-transaction';
-import { UnionAffiliationsRepository } from '../payroll-database-implementation/union-affiliation-repository';
 
 describe('ChangeEmployeeNameTransaction class', () => {
-  const employeeRepository = EmployeeRepository.getInstance();
-  const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
+  const employeeRepository = new EmployeeRepository();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
@@ -22,7 +20,6 @@ describe('ChangeEmployeeNameTransaction class', () => {
 
   afterEach(async () => {
     employeeRepository.clear();
-    unionAffiliationRepository.clear();
   });
 
   describe('ChangeEmployeeNameTransaction execute method', () => {
@@ -31,11 +28,13 @@ describe('ChangeEmployeeNameTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
       const transaction = new ChangeEmployeeNameTransaction(
         employeeId,
+        employeeRepository,
         employeeName2,
       );
       transaction.execute();
@@ -50,6 +49,7 @@ describe('ChangeEmployeeNameTransaction class', () => {
   it('When execute method is called but employee is not founded then occurs a exeception', () => {
     const transaction = new ChangeEmployeeNameTransaction(
       employeeId,
+      employeeRepository,
       employeeName2,
     );
 

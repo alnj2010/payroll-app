@@ -5,16 +5,19 @@ import { BiweeklyScheduler } from '../schedule/biweekly-scheduler';
 import { PaymentClassification } from '../domain/payment-classification';
 import { PaymentScheduler } from '../domain/payment-scheduler';
 import { PaymentMethod } from '../domain/payment-method';
+import { ERepository } from 'src/payroll-database/e-repository';
 
 export class AddCommissionEmployeeTransaction extends AddEmployeeTransaction {
   constructor(
     id: string,
     name: string,
     address: string,
+    employeeRepository: ERepository,
+
     private salary: number,
     private commissionRate: number,
   ) {
-    super(id, name, address);
+    super(id, name, address, employeeRepository);
   }
 
   protected createPaymentClassification(): PaymentClassification {

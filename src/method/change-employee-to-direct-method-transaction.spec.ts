@@ -11,11 +11,9 @@ import { EmployeeRepository } from '../payroll-database-implementation/employee-
 import { ChangeEmployeeToDirectMethodTransaction } from './change-employee-to-direct-method-transaction';
 import { AddHourlyEmployeeTransaction } from '../classification/add-hourly-employee-transaction';
 import { DirectMethod } from './direct-method';
-import { UnionAffiliationsRepository } from '../payroll-database-implementation/union-affiliation-repository';
 
 describe('ChangeEmployeeToDirectMethodTransaction class', () => {
-  const employeeRepository = EmployeeRepository.getInstance();
-  const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
+  const employeeRepository = new EmployeeRepository();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
@@ -24,7 +22,6 @@ describe('ChangeEmployeeToDirectMethodTransaction class', () => {
 
   afterEach(async () => {
     employeeRepository.clear();
-    unionAffiliationRepository.clear();
   });
 
   describe('ChangeEmployeeToDirectMethodTransaction execute method', () => {
@@ -33,11 +30,13 @@ describe('ChangeEmployeeToDirectMethodTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
       const transaction = new ChangeEmployeeToDirectMethodTransaction(
         employeeId,
+        employeeRepository,
         employeeBank,
         employeeBankAccount,
       );
@@ -56,6 +55,7 @@ describe('ChangeEmployeeToDirectMethodTransaction class', () => {
   it('When execute method is called but employee is not founded then occurs a exeception', () => {
     const transaction = new ChangeEmployeeToDirectMethodTransaction(
       employeeId,
+      employeeRepository,
       employeeBank,
       employeeBankAccount,
     );

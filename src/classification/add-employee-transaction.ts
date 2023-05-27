@@ -5,13 +5,14 @@ import { PaymentClassification } from '../domain/payment-classification';
 import { PaymentMethod } from '../domain/payment-method';
 import { PaymentScheduler } from '../domain/payment-scheduler';
 import { Transaction } from '../domain/transaction';
-import { EmployeeRepository } from '../payroll-database-implementation/employee-repository';
+import { ERepository } from 'src/payroll-database/e-repository';
 
 export abstract class AddEmployeeTransaction implements Transaction {
   constructor(
     protected id: string,
     protected name: string,
     protected address: string,
+    protected employeeRepository: ERepository,
   ) {}
 
   protected abstract createPaymentClassification(): PaymentClassification;
@@ -26,7 +27,6 @@ export abstract class AddEmployeeTransaction implements Transaction {
     employee.setPaymentMethod(this.createPaymentMethod());
     employee.setAffiliation(new NoAffiliation());
 
-    const employeeRepository = EmployeeRepository.getInstance();
-    employeeRepository.create(employee);
+    this.employeeRepository.create(employee);
   }
 }

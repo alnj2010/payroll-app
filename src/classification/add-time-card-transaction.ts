@@ -3,19 +3,19 @@ import { HourlyClassification } from './hourly-classification';
 import { TimeCard } from './time-card';
 
 import { Transaction } from '../domain/transaction';
-import { EmployeeRepository } from '../payroll-database-implementation/employee-repository';
+import { ERepository } from 'src/payroll-database/e-repository';
 
 export class AddTimeCardTransaction implements Transaction {
   constructor(
-    protected id: string,
-    protected date: string,
-    protected hours: number,
+    private id: string,
+    private date: string,
+    private hours: number,
+    private employeeRepository: ERepository,
   ) {}
 
   public execute(): void {
     try {
-      const employeeRepository = EmployeeRepository.getInstance();
-      const employee: Employee = employeeRepository.read(this.id);
+      const employee: Employee = this.employeeRepository.read(this.id);
 
       const classification = this.getHourlyClassification(employee);
 

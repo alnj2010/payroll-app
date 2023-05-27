@@ -4,10 +4,11 @@ import { NoAffiliation } from './no-affiliation';
 import { UnionAffiliation } from './union-affiliation';
 import { UnionAffiliationsRepository } from '../payroll-database-implementation/union-affiliation-repository';
 import { ChangeEmployeeAffiliationTransaction } from './change-employee-affiliation-transaction';
+import { ERepository } from 'src/payroll-database/e-repository';
 
 export class ChangeEmployeeToNoAffiliationTransaction extends ChangeEmployeeAffiliationTransaction {
-  constructor(id: string) {
-    super(id);
+  constructor(id: string, employeeRepository: ERepository) {
+    super(id, employeeRepository);
   }
 
   protected getAffiliation(): Affiliation {

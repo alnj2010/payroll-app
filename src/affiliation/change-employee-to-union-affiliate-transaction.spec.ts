@@ -14,7 +14,7 @@ import { UnionAffiliation } from './union-affiliation';
 import { ChangeEmployeeToUnionAffiliationTransaction } from './change-employee-to-union-affiliate-transaction';
 
 describe('ChangeEmployeeToUnionAffiliationTransaction class', () => {
-  const employeeRepository = EmployeeRepository.getInstance();
+  const employeeRepository = new EmployeeRepository();
   const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -33,11 +33,13 @@ describe('ChangeEmployeeToUnionAffiliationTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
       const transaction = new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
+        employeeRepository,
         memberId,
         memberDuesRate,
       );
@@ -55,6 +57,7 @@ describe('ChangeEmployeeToUnionAffiliationTransaction class', () => {
   it('When execute method is called but employee is not founded then occurs a exeception', () => {
     const transaction = new ChangeEmployeeToUnionAffiliationTransaction(
       employeeId,
+      employeeRepository,
       memberId,
       memberDuesRate,
     );

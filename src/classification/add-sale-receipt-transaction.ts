@@ -3,19 +3,19 @@ import { CommissionClassification } from './commission-classification';
 import { SaleReceipt } from './sale-receipt';
 
 import { Transaction } from '../domain/transaction';
-import { EmployeeRepository } from '../payroll-database-implementation/employee-repository';
+import { ERepository } from 'src/payroll-database/e-repository';
 
 export class AddSaleReceiptTransaction implements Transaction {
   constructor(
-    protected id: string,
-    protected date: string,
-    protected amount: number,
+    private id: string,
+    private date: string,
+    private amount: number,
+    private employeeRepository: ERepository,
   ) {}
 
   public execute(): void {
     try {
-      const employeeRepository = EmployeeRepository.getInstance();
-      const employee: Employee = employeeRepository.read(this.id);
+      const employee: Employee = this.employeeRepository.read(this.id);
 
       const classification = this.getCommissionClassification(employee);
 

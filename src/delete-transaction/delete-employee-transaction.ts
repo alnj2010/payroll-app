@@ -1,12 +1,10 @@
+import { ERepository } from 'src/payroll-database/e-repository';
 import { Transaction } from '../domain/transaction';
-import { EmployeeRepository } from '../payroll-database-implementation/employee-repository';
 
 export class DeleteEmployeeTransaction implements Transaction {
-  constructor(protected id: string) {}
+  constructor(private id: string, private employeeRepository: ERepository) {}
 
   public execute(): void {
-    const employeeRepository = EmployeeRepository.getInstance();
-
-    employeeRepository.delete(this.id);
+    this.employeeRepository.delete(this.id);
   }
 }

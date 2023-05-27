@@ -1,15 +1,14 @@
+import { ERepository } from 'src/payroll-database/e-repository';
 import { Employee } from '../domain/employee';
 import { Transaction } from '../domain/transaction';
-import { EmployeeRepository } from '../payroll-database-implementation/employee-repository';
 
 export abstract class ChangeEmployeeTransaction implements Transaction {
-  constructor(private id: string) {}
+  constructor(private id: string, private employeeRepository: ERepository) {}
   protected abstract change(employee: Employee): void;
 
   public execute(): void {
     try {
-      const employeeRepository = EmployeeRepository.getInstance();
-      const employee = employeeRepository.read(this.id);
+      const employee = this.employeeRepository.read(this.id);
       this.change(employee);
     } catch (error) {
       throw error;

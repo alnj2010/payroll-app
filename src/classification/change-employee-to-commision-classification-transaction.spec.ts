@@ -11,11 +11,9 @@ import { ChangeEmployeeToCommissionClassificationTransaction } from './change-em
 import { AddSalaryEmployeeTransaction } from './add-salary-employee-transaction';
 import { CommissionClassification } from './commission-classification';
 import { BiweeklyScheduler } from '../schedule/biweekly-scheduler';
-import { UnionAffiliationsRepository } from '../payroll-database-implementation/union-affiliation-repository';
 
 describe('ChangeEmployeeToCommissionClassificationTransaction class', () => {
-  const employeeRepository = EmployeeRepository.getInstance();
-  const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
+  const employeeRepository = new EmployeeRepository();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
@@ -24,7 +22,6 @@ describe('ChangeEmployeeToCommissionClassificationTransaction class', () => {
 
   afterEach(async () => {
     employeeRepository.clear();
-    unionAffiliationRepository.clear();
   });
 
   describe('ChangeEmployeeToCommissionClassificationTransaction execute method', () => {
@@ -33,12 +30,14 @@ describe('ChangeEmployeeToCommissionClassificationTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
       ).execute();
 
       const transaction =
         new ChangeEmployeeToCommissionClassificationTransaction(
           employeeId,
+          employeeRepository,
           employeeSalary,
           employeeCommissionRate,
         );
@@ -57,6 +56,7 @@ describe('ChangeEmployeeToCommissionClassificationTransaction class', () => {
   it('When execute method is called but employee is not founded then occurs a exeception', () => {
     const transaction = new ChangeEmployeeToCommissionClassificationTransaction(
       employeeId,
+      employeeRepository,
       employeeSalary,
       employeeCommissionRate,
     );

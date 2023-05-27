@@ -12,11 +12,9 @@ import { AddHourlyEmployeeTransaction } from '../classification/add-hourly-emplo
 import { MailMethod } from './mail-method';
 import { HoldMethod } from './hold-method';
 import { ChangeEmployeeToHoldMethodTransaction } from './change-employee-to-hold-method-transaction';
-import { UnionAffiliationsRepository } from '../payroll-database-implementation/union-affiliation-repository';
 
 describe('ChangeEmployeeToHoldMethodTransaction class', () => {
-  const employeeRepository = EmployeeRepository.getInstance();
-  const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
+  const employeeRepository = new EmployeeRepository();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
@@ -25,7 +23,6 @@ describe('ChangeEmployeeToHoldMethodTransaction class', () => {
 
   afterEach(async () => {
     employeeRepository.clear();
-    unionAffiliationRepository.clear();
   });
 
   describe('ChangeEmployeeToHoldMethodTransaction execute method', () => {
@@ -34,11 +31,13 @@ describe('ChangeEmployeeToHoldMethodTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
       new ChangeEmployeeToMailMethodTransaction(
         employeeId,
+        employeeRepository,
         employeeMailAddress,
       ).execute();
 
@@ -46,7 +45,10 @@ describe('ChangeEmployeeToHoldMethodTransaction class', () => {
 
       expect(employee.getPaymentMethod()).toBeInstanceOf(MailMethod);
 
-      const transaction = new ChangeEmployeeToHoldMethodTransaction(employeeId);
+      const transaction = new ChangeEmployeeToHoldMethodTransaction(
+        employeeId,
+        employeeRepository,
+      );
       transaction.execute();
 
       expect(employee.getId()).toEqual(employeeId);
@@ -55,7 +57,10 @@ describe('ChangeEmployeeToHoldMethodTransaction class', () => {
   });
 
   it('When execute method is called but employee is not founded then occurs a exeception', () => {
-    const transaction = new ChangeEmployeeToHoldMethodTransaction(employeeId);
+    const transaction = new ChangeEmployeeToHoldMethodTransaction(
+      employeeId,
+      employeeRepository,
+    );
 
     expect.assertions(1);
     try {

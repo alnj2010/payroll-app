@@ -13,11 +13,9 @@ import { AddHourlyEmployeeTransaction } from './add-hourly-employee-transaction'
 import { HourlyClassification } from './hourly-classification';
 import { AddTimeCardTransaction } from './add-time-card-transaction';
 import { AddSalaryEmployeeTransaction } from './add-salary-employee-transaction';
-import { UnionAffiliationsRepository } from '../payroll-database-implementation/union-affiliation-repository';
 
 describe('addTimeCardTransaction class', () => {
-  const employeeRepository = EmployeeRepository.getInstance();
-  const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
+  const employeeRepository = new EmployeeRepository();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
@@ -26,7 +24,6 @@ describe('addTimeCardTransaction class', () => {
 
   afterEach(async () => {
     employeeRepository.clear();
-    unionAffiliationRepository.clear();
   });
 
   describe('addTimeCardTransaction execute method', () => {
@@ -35,6 +32,7 @@ describe('addTimeCardTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeehourlyRate,
       ).execute();
 
@@ -46,6 +44,7 @@ describe('addTimeCardTransaction class', () => {
         employee.getId(),
         timecardDate,
         timecardHours,
+        employeeRepository,
       );
 
       addTimeCardTransaction.execute();
@@ -61,6 +60,7 @@ describe('addTimeCardTransaction class', () => {
         employeeId,
         timecardDate,
         timecardHours,
+        employeeRepository,
       );
 
       expect.assertions(1);
@@ -76,6 +76,7 @@ describe('addTimeCardTransaction class', () => {
         employeeId,
         employeeName,
         employeeAddress,
+        employeeRepository,
         employeeSalary,
       ).execute();
 
@@ -85,6 +86,7 @@ describe('addTimeCardTransaction class', () => {
         employee.getId(),
         timecardDate,
         timecardHours,
+        employeeRepository,
       );
 
       expect.assertions(1);

@@ -3,15 +3,6 @@ import { DB } from '../db';
 import { Employee } from '../domain/employee';
 
 export class EmployeeRepository implements ERepository {
-  private static instance: EmployeeRepository;
-
-  static getInstance(): EmployeeRepository {
-    if (!this.instance) {
-      this.instance = new EmployeeRepository();
-    }
-    return this.instance;
-  }
-
   create(employee: Employee) {
     DB.employees.set(employee.getId(), employee);
   }

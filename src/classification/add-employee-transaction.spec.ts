@@ -19,9 +19,11 @@ import { AddHourlyEmployeeTransaction } from './add-hourly-employee-transaction'
 import { AddCommissionEmployeeTransaction } from './add-commission-employee-transaction';
 import { CommissionClassification } from './commission-classification';
 import { BiweeklyScheduler } from '../schedule/biweekly-scheduler';
-import { UnionAffiliationsRepository } from '../payroll-database-implementation/union-affiliation-repository';
+import { ERepository } from 'src/payroll-database/e-repository';
 
 abstract class EmployeeAdderTester {
+  constructor(protected employeeRepository: ERepository) {}
+
   protected abstract createAddEmployeeTransaction();
   protected abstract assertPaymentClassification(employee: Employee);
   protected abstract assertPaymentScheduler(employee: Employee);
@@ -32,8 +34,7 @@ abstract class EmployeeAdderTester {
     const transaction = this.createAddEmployeeTransaction();
 
     transaction.execute();
-    const employeeRepository = EmployeeRepository.getInstance();
-    const employee = employeeRepository.read(employeeId);
+    const employee = this.employeeRepository.read(employeeId);
 
     expect(employee).not.toBeUndefined();
 
@@ -49,11 +50,16 @@ abstract class EmployeeAdderTester {
 }
 
 class SalaryEmployeeAdderTester extends EmployeeAdderTester {
+  constructor(employeeRepository: ERepository) {
+    super(employeeRepository);
+  }
+
   createAddEmployeeTransaction(): AddSalaryEmployeeTransaction {
     return new AddSalaryEmployeeTransaction(
       employeeId,
       employeeName,
       employeeAddress,
+      this.employeeRepository,
       employeeSalary,
     );
   }
@@ -79,11 +85,16 @@ class SalaryEmployeeAdderTester extends EmployeeAdderTester {
 }
 
 class HourlyEmployeeAdderTester extends EmployeeAdderTester {
+  constructor(employeeRepository: ERepository) {
+    super(employeeRepository);
+  }
+
   createAddEmployeeTransaction(): AddHourlyEmployeeTransaction {
     return new AddHourlyEmployeeTransaction(
       employeeId,
       employeeName,
       employeeAddress,
+      this.employeeRepository,
       employeehourlyRate,
     );
   }
@@ -109,11 +120,15 @@ class HourlyEmployeeAdderTester extends EmployeeAdderTester {
 }
 
 class CommissionEmployeeAdderTester extends EmployeeAdderTester {
+  constructor(employeeRepository: ERepository) {
+    super(employeeRepository);
+  }
   createAddEmployeeTransaction(): AddCommissionEmployeeTransaction {
     return new AddCommissionEmployeeTransaction(
       employeeId,
       employeeName,
       employeeAddress,
+      this.employeeRepository,
       employeeSalary,
       employeeCommissionRate,
     );
@@ -143,36 +158,35 @@ class CommissionEmployeeAdderTester extends EmployeeAdderTester {
 }
 
 describe('AddEmployeeTransaction class', () => {
-  const employeeRepository = EmployeeRepository.getInstance();
-  const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
     }).compile();
   });
 
-  afterEach(async () => {
-    employeeRepository.clear();
-    unionAffiliationRepository.clear();
-  });
-
   describe('AddSalaryEmployeeTransaction execute method', () => {
     it('When execute method is called a salaryEmployee is created', () => {
-      const salaryEmployeeAdderTester = new SalaryEmployeeAdderTester();
+      const salaryEmployeeAdderTester = new SalaryEmployeeAdderTester(
+        new EmployeeRepository(),
+      );
       salaryEmployeeAdderTester.test();
     });
   });
 
   describe('AddHourlyEmployeeTransaction execute method', () => {
     it('When execute method is called a hourlyEmployee is created', () => {
-      const hourlyEmployeeAdderTester = new HourlyEmployeeAdderTester();
+      const hourlyEmployeeAdderTester = new HourlyEmployeeAdderTester(
+        new EmployeeRepository(),
+      );
       hourlyEmployeeAdderTester.test();
     });
   });
 
   describe('AddCommissionEmployeeTransaction execute method', () => {
     it('When execute method is called a commissionEmployee is created', () => {
-      const commissionEmployeeAdderTester = new CommissionEmployeeAdderTester();
+      const commissionEmployeeAdderTester = new CommissionEmployeeAdderTester(
+        new EmployeeRepository(),
+      );
       commissionEmployeeAdderTester.test();
     });
   });
