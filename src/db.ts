@@ -1,4 +1,4 @@
-import { Employee } from './employee/domain/employee';
+import { Employee } from './domain/employee';
 
 export const DB = {
   employees: new Map<string, Employee>(),

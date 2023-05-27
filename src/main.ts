@@ -1,8 +1,9 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { PayrollApplicationModule } from './payroll-application.module';
+import { PayrollApplicationService } from './payroll-application/payroll-application.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  const app = await NestFactory.create(PayrollApplicationModule);
+  await app.get(PayrollApplicationService).init();
 }
 bootstrap();
