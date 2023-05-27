@@ -59,7 +59,7 @@ function assertPaycheck(
 
 describe('paydayTransaction class', () => {
   const employeeRepository = new EmployeeRepository();
-  const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
+  const unionAffiliationRepository = new UnionAffiliationsRepository();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
@@ -218,6 +218,7 @@ describe('paydayTransaction class', () => {
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
         employeeRepository,
+        unionAffiliationRepository,
         memberId,
         memberDuesRate,
       ).execute();
@@ -261,6 +262,7 @@ describe('paydayTransaction class', () => {
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
         employeeRepository,
+        unionAffiliationRepository,
         memberId,
         memberDuesRate,
       ).execute();
@@ -269,6 +271,7 @@ describe('paydayTransaction class', () => {
         serviceChargeDate,
         memberId,
         serviceChargeAmount,
+        unionAffiliationRepository,
       ).execute();
 
       const transaction = new PaydayTransaction(
@@ -311,6 +314,7 @@ describe('paydayTransaction class', () => {
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
         employeeRepository,
+        unionAffiliationRepository,
         memberId,
         memberDuesRate,
       ).execute();
@@ -319,6 +323,7 @@ describe('paydayTransaction class', () => {
         serviceChargeOutDate,
         memberId,
         serviceChargeAmount,
+        unionAffiliationRepository,
       ).execute();
 
       const transaction = new PaydayTransaction(
@@ -501,6 +506,7 @@ describe('paydayTransaction class', () => {
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
         employeeRepository,
+        unionAffiliationRepository,
         memberId,
         memberDuesRate,
       ).execute();
@@ -721,6 +727,7 @@ describe('paydayTransaction class', () => {
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
         employeeRepository,
+        unionAffiliationRepository,
         memberId,
         memberDuesRate,
       ).execute();
@@ -767,6 +774,7 @@ describe('paydayTransaction class', () => {
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
         employeeRepository,
+        unionAffiliationRepository,
         memberId,
         memberDuesRate,
       ).execute();

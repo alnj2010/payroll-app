@@ -16,7 +16,7 @@ import { NoAffiliation } from './no-affiliation';
 
 describe('ChangeEmployeeToNoAffiliationTransaction class', () => {
   const employeeRepository = new EmployeeRepository();
-  const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
+  const unionAffiliationRepository = new UnionAffiliationsRepository();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
@@ -41,6 +41,7 @@ describe('ChangeEmployeeToNoAffiliationTransaction class', () => {
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
         employeeRepository,
+        unionAffiliationRepository,
         memberId,
         memberDuesRate,
       ).execute();
@@ -48,6 +49,7 @@ describe('ChangeEmployeeToNoAffiliationTransaction class', () => {
       const transaction = new ChangeEmployeeToNoAffiliationTransaction(
         employeeId,
         employeeRepository,
+        unionAffiliationRepository,
       );
       transaction.execute();
 
@@ -66,6 +68,7 @@ describe('ChangeEmployeeToNoAffiliationTransaction class', () => {
     const transaction = new ChangeEmployeeToUnionAffiliationTransaction(
       employeeId,
       employeeRepository,
+      unionAffiliationRepository,
       memberId,
       memberDuesRate,
     );

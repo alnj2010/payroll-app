@@ -4,11 +4,13 @@ import { UnionAffiliation } from './union-affiliation';
 import { UnionAffiliationsRepository } from '../payroll-database-implementation/union-affiliation-repository';
 import { ChangeEmployeeAffiliationTransaction } from './change-employee-affiliation-transaction';
 import { ERepository } from 'src/payroll-database/e-repository';
+import { AffiliationRepository } from 'src/payroll-database/afiliation-repository';
 
 export class ChangeEmployeeToUnionAffiliationTransaction extends ChangeEmployeeAffiliationTransaction {
   constructor(
     id: string,
     employeeRepository: ERepository,
+    private unionAffiliationRepository: AffiliationRepository,
     private memberId: string,
     private memberDuesRate: number,
   ) {
@@ -19,9 +21,6 @@ export class ChangeEmployeeToUnionAffiliationTransaction extends ChangeEmployeeA
     return new UnionAffiliation(this.memberId, this.memberDuesRate);
   }
   protected registerAffiliation(employee: Employee) {
-    const unionAffiliationRepository =
-      UnionAffiliationsRepository.getInstance();
-
-    unionAffiliationRepository.create(this.memberId, employee);
+    this.unionAffiliationRepository.create(this.memberId, employee);
   }
 }

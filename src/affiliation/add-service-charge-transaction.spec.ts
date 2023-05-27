@@ -18,7 +18,7 @@ import { ChangeEmployeeToUnionAffiliationTransaction } from './change-employee-t
 
 describe('addServiceChargeTransaction class', () => {
   const employeeRepository = new EmployeeRepository();
-  const unionAffiliationRepository = UnionAffiliationsRepository.getInstance();
+  const unionAffiliationRepository = new UnionAffiliationsRepository();
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       providers: [],
@@ -43,6 +43,7 @@ describe('addServiceChargeTransaction class', () => {
       new ChangeEmployeeToUnionAffiliationTransaction(
         employeeId,
         employeeRepository,
+        unionAffiliationRepository,
         memberId,
         memberDuesRate,
       ).execute();
@@ -51,6 +52,7 @@ describe('addServiceChargeTransaction class', () => {
         serviceChargeDate,
         memberId,
         serviceChargeAmount,
+        unionAffiliationRepository,
       );
 
       addServiceChargeTransaction.execute();
@@ -68,6 +70,7 @@ describe('addServiceChargeTransaction class', () => {
         serviceChargeDate,
         memberId,
         serviceChargeAmount,
+        unionAffiliationRepository,
       );
 
       expect.assertions(1);

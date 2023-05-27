@@ -3,15 +3,6 @@ import { Employee } from '../domain/employee';
 import { AffiliationRepository } from '../payroll-database/afiliation-repository';
 
 export class UnionAffiliationsRepository implements AffiliationRepository {
-  private static instance: UnionAffiliationsRepository;
-
-  static getInstance(): UnionAffiliationsRepository {
-    if (!this.instance) {
-      this.instance = new UnionAffiliationsRepository();
-    }
-    return this.instance;
-  }
-
   create(memberId: string, employee: Employee) {
     DB.unionAffiliations.set(memberId, employee);
   }
